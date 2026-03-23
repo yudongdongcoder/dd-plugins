@@ -1,6 +1,5 @@
 ---
-name: implement-feature
-description: Implement a feature from spec. Activates when user wants to start implementing a feature based on spec and tasks.
+description: Implement a feature from spec
 argument-hint: <feature-name>
 allowed-tools: Read, Write, Edit, mcp__xcodebuildmcp__*
 ---

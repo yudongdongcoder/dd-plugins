@@ -1,6 +1,5 @@
 ---
-name: create-prd
-description: Create a new PRD from requirements discussion. Activates when user wants to create a Product Requirements Document.
+description: Create a new PRD from requirements discussion
 allowed-tools: Read, Write, Edit
 ---
 

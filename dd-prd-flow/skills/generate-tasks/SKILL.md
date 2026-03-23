@@ -1,6 +1,5 @@
 ---
-name: generate-tasks
-description: Break down feature spec into implementable tasks. Activates when user wants to generate task breakdown from a feature spec.
+description: Break down feature spec into implementable tasks
 argument-hint: <feature-name>
 allowed-tools: Read, Write
 ---

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "mcp__MiniMax__web_search",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(git ls-tree:*)"
     ]
   }
 }

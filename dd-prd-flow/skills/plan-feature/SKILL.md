@@ -1,6 +1,5 @@
 ---
-name: plan-feature
-description: Create implementation plan for a feature. Activates when user wants to plan feature implementation or create an implementation roadmap.
+description: Create implementation plan for a feature
 argument-hint: <feature-name>
 allowed-tools: Read, Grep, Glob
 ---

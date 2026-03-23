@@ -1,6 +1,5 @@
 ---
-name: generate-spec
-description: Generate feature specification from PRD. Activates when user wants to create a detailed spec from PRD requirements.
+description: Generate feature specification from PRD
 argument-hint: <feature-name>
 allowed-tools: Read, Write
 ---
