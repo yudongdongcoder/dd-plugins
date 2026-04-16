@@ -1,8 +1,8 @@
 {
-"name": "dd-prd-flow",
-"description": "A greeting plugin to learn the basics",
-"version": "1.0.0",
-"author": {
-"name": "dong"
-}
+  "name": "dd-prd-flow",
+  "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、任务拆解与实现。",
+  "version": "1.0.0",
+  "author": {
+    "name": "dong"
+  }
 }

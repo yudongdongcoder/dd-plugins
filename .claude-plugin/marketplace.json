@@ -13,6 +13,11 @@
       "name": "dd-prd-flow",
       "source": "./dd-prd-flow",
       "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、任务拆解与实现。"
+    },
+    {
+      "name": "dd-git-workflow",
+      "source": "./dd-git-workflow",
+      "description": "仓库专用 Git 工作流插件，提供面向本仓库插件改动的提交辅助命令。"
     }
   ]
 }
