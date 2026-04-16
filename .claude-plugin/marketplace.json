@@ -1,0 +1,18 @@
+{
+  "name": "dd-plugins",
+  "owner": {
+    "name": "dong"
+  },
+  "plugins": [
+    {
+      "name": "dd-modules",
+      "source": "./dd-modules",
+      "description": "实用开发模块集合，提供 podspec 格式化和 changelog 生成功能。"
+    },
+    {
+      "name": "dd-prd-flow",
+      "source": "./dd-prd-flow",
+      "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、任务拆解与实现。"
+    }
+  ]
+}

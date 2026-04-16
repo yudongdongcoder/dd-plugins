@@ -1,6 +1,6 @@
 {
 "name": "dd-modules",
-"description": "A greeting plugin to learn the basics",
+"description": "实用开发模块集合，提供 podspec 格式化和 changelog 生成功能。",
 "version": "1.0.0",
 "author": {
 "name": "dong"
