@@ -12,7 +12,7 @@ ultrathink and create a comprehensive implementation plan for: $ARGUMENTS
 1. Read the PRD and feature spec
 2. Analyze the existing codebase structure
 3. Identify dependencies and integration points
-4. Create step-by-step implementation plan
+4. Create a step-by-step implementation plan
 5. Identify potential challenges and solutions
 6. Estimate effort for each step
 7. Create `docs/tasks/$ARGUMENTS-plan.md`

@@ -5,7 +5,7 @@ allowed-tools: Read, Write, Edit
 
 # Create Product Requirements Document
 
-Based on our discussion, create a comprehensive PRD in `docs/PRD.md`.
+Based on the discussion, create a comprehensive PRD in `docs/PRD.md`.
 
 Follow this structure:
 1. Executive Summary
