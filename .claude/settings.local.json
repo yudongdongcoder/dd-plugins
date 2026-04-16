@@ -3,7 +3,11 @@
     "allow": [
       "mcp__MiniMax__web_search",
       "Bash(cd:*)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(git:*)"
     ]
+  },
+  "enabledPlugins": {
+    "commit-commands@claude-plugins-official": true
   }
 }
