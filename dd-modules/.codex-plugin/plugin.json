@@ -1,0 +1,33 @@
+{
+  "name": "dd-modules",
+  "version": "1.0.0",
+  "description": "实用开发模块集合，提供 podspec 格式化和 changelog 生成功能。",
+  "author": {
+    "name": "dong"
+  },
+  "keywords": [
+    "ios",
+    "cocoapods",
+    "podspec",
+    "changelog",
+    "release-notes"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DD Modules",
+    "shortDescription": "Podspec formatting and changelog generation",
+    "longDescription": "Utilities for iOS module maintenance, including CocoaPods podspec cleanup and user-facing changelog generation from git history.",
+    "developerName": "dong",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Format the podspec files in this repo",
+      "Generate a user-facing changelog"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

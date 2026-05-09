@@ -1,0 +1,34 @@
+{
+  "name": "dd-prd-flow",
+  "version": "1.0.0",
+  "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、任务拆解与实现。",
+  "author": {
+    "name": "dong"
+  },
+  "keywords": [
+    "prd",
+    "product-requirements",
+    "spec",
+    "tasks",
+    "implementation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DD PRD Flow",
+    "shortDescription": "PRD-driven planning and implementation",
+    "longDescription": "A product development workflow for turning requirements discussions into PRDs, feature specs, task breakdowns, implementation plans, and incremental feature work.",
+    "developerName": "dong",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Create a PRD from this discussion",
+      "Generate a feature spec from docs/PRD.md",
+      "Break this feature spec into tasks"
+    ],
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

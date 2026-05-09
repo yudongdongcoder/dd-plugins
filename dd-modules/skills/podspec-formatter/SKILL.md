@@ -1,13 +1,13 @@
 ---
-description: Automatically format and optimize CocoaPods podspec files in the current directory.
-allowed-tools: Bash(find:*), Bash(git remote:*), Read, Edit
+name: podspec-formatter
+description: Automatically format and optimize CocoaPods podspec files in the current directory. Use when the user asks to update podspec metadata, normalize versions, refresh homepage/source fields, or clean CocoaPods specifications.
 ---
 
 # Podspec Formatter
 
 Automatically format and optimize all CocoaPods podspec files in the current directory.
 
-## Your task
+## Workflow
 
 1. Find all `.podspec` files in the current directory and subdirectories.
 2. Update `s.version` to:
@@ -28,3 +28,9 @@ Automatically format and optimize all CocoaPods podspec files in the current dir
    s.dependency 'XXX', "= #{s.version}"
    ```
 7. Output a summary of all changes made to each podspec file.
+
+## Codex Notes
+
+- Inspect nearby source, README files, and podspec context before rewriting summaries or descriptions.
+- Keep edits scoped to podspec formatting unless the user asks for broader repository changes.
+- Prefer structured parsing or careful Ruby-aware edits when available; otherwise make minimal targeted replacements.
