@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validate Flow"
+  short_description: "Check PRD/spec/task consistency"
+  default_prompt: "Use $validate-flow to check whether this PRD workflow is ready to implement."

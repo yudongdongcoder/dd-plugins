@@ -1,30 +1,35 @@
 ---
 name: plan-feature
-description: 为指定功能创建中文实施计划，但不写实现代码。适用于用户要求分析代码结构、依赖、集成点、风险和分阶段开发方案。
+description: Create a Chinese implementation plan for one PRD-flow feature without modifying product code. Use when the user asks to analyze how to build a feature from docs/PRD.md and its docs/specs feature file, inspect existing code structure, identify integration points, dependencies, migrations, risks, phases, validation strategy, or write a docs/tasks feature plan before task breakdown or coding.
 ---
 
-# Plan Feature Implementation
+# Plan Feature
 
-为用户指定的功能创建完整中文实施计划，默认保存到 `docs/tasks/<feature-name>-plan.md`。本技能只做分析和计划，不写实现代码。
+Create a code-aware implementation plan without changing business code. Default output: `docs/tasks/<feature-id>-plan.md`.
 
-## 适用场景
+## Workflow
 
-- 用户想先评估功能怎么做，而不是立刻编码。
-- 需要分析现有代码结构、依赖、集成点、风险和工作量。
-- 需要生成可供评审或后续拆任务的实施计划。
+1. Identify the target `feature id`; ask only if it cannot be inferred.
+2. Read `docs/PRD.md` and `docs/specs/<feature-id>.md`.
+3. Inspect the existing codebase with fast search (`rg`, `rg --files`) and read relevant modules.
+4. Identify module boundaries, data flow, dependencies, integration points, migrations, compatibility risks, and testing surface.
+5. Split implementation into ordered phases with validation for each phase.
+6. Create or update `docs/tasks/<feature-id>-plan.md`.
 
-## 工作流
+## Required Structure
 
-1. 确认功能名；如果无法推断，再询问用户。
-2. 阅读 PRD 和功能规格。
-3. 分析现有代码结构、模块边界和关键调用链。
-4. 识别依赖、集成点、数据迁移、兼容性和测试风险。
-5. 给出分阶段实施步骤。
-6. 为每一步估算复杂度和验证方式。
-7. 创建或更新 `docs/tasks/<feature-name>-plan.md`。
+1. 目标与输入文档
+2. 现有代码结构观察
+3. 关键集成点
+4. 数据、接口或迁移影响
+5. 分阶段实施方案
+6. 测试与验证策略
+7. 风险、取舍与回滚思路
+8. 后续任务拆解建议
 
-## 约束
+## Constraints
 
-- 不写实现代码。
-- 不修改业务文件，除非是创建或更新计划文档。
-- 计划要具体到可执行步骤，避免停留在抽象建议。
+- Do not implement feature code in this skill.
+- Do not modify business files; only create or update the plan document unless the user explicitly asks otherwise.
+- Keep the plan specific to files, modules, commands, and validation steps where discoverable.
+- If code structure is missing or ambiguous, state the assumption and propose the safest next check.

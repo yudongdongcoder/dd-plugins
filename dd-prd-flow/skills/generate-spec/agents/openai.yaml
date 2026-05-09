@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Spec"
+  short_description: "Expand a PRD feature into a spec"
+  default_prompt: "Use $generate-spec to create a feature spec from docs/PRD.md."

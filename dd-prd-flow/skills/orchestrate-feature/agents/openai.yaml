@@ -1,0 +1,4 @@
+interface:
+  display_name: "Orchestrate Feature"
+  short_description: "Choose the next PRD-flow step"
+  default_prompt: "Use $orchestrate-feature to decide and run the next PRD workflow step."

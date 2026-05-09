@@ -1,30 +1,39 @@
 ---
 name: generate-spec
-description: 基于 docs/PRD.md 为指定功能生成中文功能规格说明。适用于用户要求从 PRD 中提取某个 feature 的需求、验收标准、技术方案和实现边界。
+description: Generate a detailed Chinese feature specification from docs/PRD.md for one selected feature. Use when the user asks to expand a PRD feature into engineering-readable scope, non-goals, acceptance criteria, data model, state flow, interfaces, errors, dependencies, traceability, or a docs/specs feature file for later planning and tasks.
 ---
 
-# Generate Feature Specification
+# Generate Feature Spec
 
-读取 `docs/PRD.md`，为用户指定的功能生成详细中文规格说明，并默认保存到 `docs/specs/<feature-name>.md`。
+Turn one PRD feature into an implementation-ready specification. Default output: `docs/specs/<feature-id>.md`.
 
-## 适用场景
+## Workflow
 
-- PRD 已存在，用户想为某个功能生成更细的 spec。
-- 需要把产品需求转换成工程可理解的功能边界、数据流、状态、接口和验收标准。
-- 后续会继续生成任务拆解或进入实现。
+1. Identify the target `feature id` from the user request or `docs/PRD.md`; ask only if it cannot be inferred.
+2. Read `docs/PRD.md` and extract relevant goals, user stories, constraints, dependencies, and non-goals.
+3. Inspect existing docs or code only when needed to avoid inventing incompatible interfaces.
+4. Define product scope, implementation boundaries, state transitions, data needs, and acceptance criteria.
+5. Record assumptions, open questions, and traceability back to PRD sections or feature-map entries.
+6. Create or update `docs/specs/<feature-id>.md`.
 
-## 工作流
+## Required Structure
 
-1. 确认功能名；如果无法从用户请求中推断，再询问用户。
-2. 阅读 `docs/PRD.md`，提取与该功能相关的目标、用户故事和约束。
-3. 定义功能范围、非目标和验收标准。
-4. 设计技术方案，包括关键模块、数据结构、接口、状态流和错误处理。
-5. 记录与 PRD 的对应关系，保留需求到设计的可追溯性。
-6. 创建或更新 `docs/specs/<feature-name>.md`。
+1. 功能概述
+2. PRD 对应关系
+3. 用户故事与验收标准
+4. 范围与非目标
+5. 关键流程与状态
+6. 数据对象、字段与约束
+7. 接口、事件或集成点
+8. 错误处理与边界情况
+9. 权限、安全、性能与可访问性要求
+10. 测试与验证建议
+11. 假设、待确认问题、风险
 
-## 输出要求
+## Quality Bar
 
-- 默认使用中文。
-- 明确列出假设和待确认问题。
-- 不写实现代码；只写规格和设计。
-- 让后续 `generate-tasks` 能直接基于该文档拆任务。
+- Write specifications, not implementation code.
+- Be concrete enough for `plan-feature` and `generate-tasks`.
+- Preserve requirement traceability so later implementation can justify decisions.
+- Prefer the repo's existing architecture and terminology when known.
+- Mark uncertain technical details as assumptions instead of presenting guesses as facts.

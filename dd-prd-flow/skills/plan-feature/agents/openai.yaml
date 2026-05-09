@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Feature"
+  short_description: "Create a code-aware build plan"
+  default_prompt: "Use $plan-feature to analyze this feature and write an implementation plan."

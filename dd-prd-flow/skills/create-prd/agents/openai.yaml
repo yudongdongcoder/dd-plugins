@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create PRD"
+  short_description: "Draft a PRD for AI execution"
+  default_prompt: "Use $create-prd to turn this product idea into a concise Chinese PRD."

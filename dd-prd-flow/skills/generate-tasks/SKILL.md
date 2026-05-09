@@ -1,30 +1,39 @@
 ---
 name: generate-tasks
-description: 将指定功能规格拆解成中文可执行任务清单。适用于用户要求根据 feature spec 生成开发任务、实施步骤、依赖顺序或可跟踪 checklist。
+description: Break a PRD-flow feature specification and optional implementation plan into a Chinese executable task checklist. Use when the user asks to create development tasks, dependency order, work packages, tracking checklists, testing steps, docs updates, or a docs/tasks feature task file from the feature spec and plan.
 ---
 
-# Generate Task Breakdown
+# Generate Tasks
 
-读取 `docs/specs/<feature-name>.md`，生成可逐项执行和跟踪的中文任务拆解，默认保存到 `docs/tasks/<feature-name>-tasks.md`。
+Create an ordered implementation checklist for one feature. Default output: `docs/tasks/<feature-id>-tasks.md`.
 
-## 适用场景
+## Workflow
 
-- 功能规格已经写好，需要拆成开发任务。
-- 用户需要实现 checklist、任务依赖顺序或单次会话可完成的工作包。
-- 后续会用 `implement-feature` 按任务逐步实现。
+1. Identify the target `feature id`; ask only if it cannot be inferred.
+2. Read `docs/specs/<feature-id>.md`.
+3. Read `docs/tasks/<feature-id>-plan.md` if it exists; otherwise read `docs/PRD.md` as backup context.
+4. Split work into small, dependency-ordered tasks that one agent session can complete.
+5. Include implementation, tests, docs updates, migration/backfill steps, and verification commands when relevant.
+6. Create or update `docs/tasks/<feature-id>-tasks.md`.
 
-## 工作流
+## Task Format
 
-1. 确认功能名；如果无法推断，再询问用户。
-2. 阅读 `docs/specs/<feature-name>.md`，必要时回看 `docs/PRD.md`。
-3. 识别实现步骤、测试步骤、文档更新和验证动作。
-4. 按依赖关系排序任务。
-5. 为每个任务标注目标、涉及文件或模块、验收标准和复杂度。
-6. 创建或更新 `docs/tasks/<feature-name>-tasks.md`。
+Use checkboxes and stable task IDs:
 
-## 任务质量要求
+```markdown
+- [ ] T01: 简短任务标题
+  - 目标：
+  - 涉及文件或模块：
+  - 前置依赖：
+  - 验收标准：
+  - 验证方式：
+  - 复杂度：S/M/L
+```
 
-- 每个任务尽量控制在一次会话可以完成的范围内。
-- 每个任务都要有可判断完成的验收标准。
-- 避免“实现功能”这类过大的任务；拆成清晰的工程动作。
-- 用复选框或状态字段让进度可跟踪。
+## Quality Bar
+
+- Avoid vague tasks like “实现功能”.
+- Keep each task independently reviewable and testable.
+- Preserve dependency order.
+- Include acceptance criteria that let `implement-feature` know when to stop.
+- If the plan and spec disagree, note the conflict instead of hiding it.

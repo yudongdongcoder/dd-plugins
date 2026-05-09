@@ -1,32 +1,29 @@
 ---
 name: implement-feature
-description: 按 PRD 工作流实现指定功能的当前未完成任务。适用于用户要求根据 spec 和 tasks 逐步开发、测试、更新任务进度并完成验证。
+description: Implement the next unfinished task for a PRD-flow feature using its spec, optional plan, and task checklist under docs. Use when the user asks to code, continue, execute, or complete a feature task with tests, verification, task progress updates, and a concise implementation report.
 ---
 
 # Implement Feature
 
-按照 PRD 工作流，为用户指定的功能实现当前未完成任务。每轮只推进一个清晰任务，完成后汇报并等待用户确认是否继续。
+Implement the next unfinished task for one PRD-flow feature. Default behavior: complete one clear task per run, then report status.
 
-## 适用场景
+## Workflow
 
-- 用户已经有 `docs/specs/<feature-name>.md` 和 `docs/tasks/<feature-name>-tasks.md`。
-- 用户要求实现某个 PRD flow 管理的功能。
-- 需要边实现、边测试、边更新任务状态。
+1. Identify the target `feature id`; ask only if it cannot be inferred.
+2. Read `docs/specs/<feature-id>.md`.
+3. Read `docs/tasks/<feature-id>-plan.md` if it exists.
+4. Read `docs/tasks/<feature-id>-tasks.md` and select the first unchecked task unless the user names a task ID.
+5. Inspect the relevant code and follow the repo's existing patterns.
+6. Make the smallest code changes that satisfy the selected task.
+7. Add or update focused tests when the task changes behavior.
+8. Run appropriate build, test, lint, or manual verification commands.
+9. Update the task checklist with completion status and brief verification notes.
+10. Report changed files, verification results, and remaining next task.
 
-## 工作流
+## Guardrails
 
-1. 确认功能名；如果无法推断，再询问用户。
-2. 阅读 `docs/specs/<feature-name>.md`，理解需求和验收标准。
-3. 阅读 `docs/tasks/<feature-name>-tasks.md`，找到当前第一个未完成任务。
-4. 分析相关代码，按仓库既有模式实现该任务。
-5. 补充或更新必要测试。
-6. 运行合适的构建、测试或静态检查。
-7. 更新任务文件中的进度和必要备注。
-8. 汇报改动、验证结果和剩余任务。
-
-## 执行原则
-
-- 一次只完成一个任务，避免跨任务扩大范围。
-- 不跳过测试；如果无法运行测试，要说明原因。
-- 不重写无关代码，不回滚用户已有改动。
-- 完成当前任务后停下，等待用户确认再继续下一个任务。
+- Do not skip verification. If a command cannot run, explain why and state residual risk.
+- Do not broaden scope beyond the selected task unless required to make it work.
+- Do not overwrite unrelated user changes.
+- If the task file is missing or too vague, stop and use `generate-tasks` or ask for clarification.
+- If implementation reveals spec/task drift, update the task note and recommend `validate-flow`.

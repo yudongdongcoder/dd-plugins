@@ -1,7 +1,7 @@
 {
   "name": "dd-prd-flow",
   "version": "1.0.0",
-  "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、任务拆解与实现。",
+  "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、实施计划、任务拆解、一致性校验与逐步实现。",
   "author": {
     "name": "dong"
   },
@@ -10,13 +10,17 @@
     "product-requirements",
     "spec",
     "tasks",
-    "implementation"
+    "implementation",
+    "workflow",
+    "ai-development",
+    "validation",
+    "orchestration"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "DD PRD Flow",
-    "shortDescription": "PRD 驱动的规划与实现流程",
-    "longDescription": "将需求讨论转化为中文 PRD、功能规格、任务拆解、实施计划和逐步实现流程的产品研发技能集合。",
+    "shortDescription": "PRD 驱动的 AI 开发流程",
+    "longDescription": "将需求讨论转化为中文 PRD、功能规格、代码感知实施计划、任务拆解、一致性校验和逐步实现流程的产品研发技能集合。",
     "developerName": "dong",
     "category": "Engineering",
     "capabilities": [
@@ -24,9 +28,13 @@
       "Write"
     ],
     "defaultPrompt": [
+      "判断当前项目下一步应该走哪个 PRD flow 阶段",
       "根据这次讨论创建中文 PRD",
       "从 docs/PRD.md 生成中文功能规格",
-      "把功能规格拆解成开发任务"
+      "为指定功能生成代码感知实施计划",
+      "把功能规格拆解成开发任务",
+      "检查 PRD、spec、plan 和 tasks 是否一致",
+      "按任务清单实现当前未完成任务"
     ],
     "brandColor": "#0F766E",
     "screenshots": []

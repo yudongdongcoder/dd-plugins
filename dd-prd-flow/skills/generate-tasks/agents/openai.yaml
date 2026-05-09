@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Tasks"
+  short_description: "Turn a spec into tracked tasks"
+  default_prompt: "Use $generate-tasks to split this feature spec into executable tasks."
