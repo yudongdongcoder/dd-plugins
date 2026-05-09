@@ -1,48 +1,48 @@
 ---
 name: update-changelog
-description: Create user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear release notes. Use when the user asks for release notes, changelog entries, app store update text, or customer-facing change summaries.
+description: 根据 git 提交历史生成面向用户的中文更新日志。适用于发布说明、版本更新摘要、App Store 更新文案、客户可读 changelog 或阶段性产品更新。
 ---
 
 # Changelog Generator
 
-Transform technical git commits into polished, user-friendly changelogs that customers and users can understand.
+将技术化的 git commit 转换成清晰、克制、用户能理解的中文更新日志。
 
-## When To Use
+## 适用场景
 
-- Preparing release notes for a new version.
-- Creating weekly or monthly product update summaries.
-- Documenting changes for customers.
-- Writing changelog entries for app store submissions.
-- Generating update notifications.
-- Creating internal release documentation.
-- Maintaining a public changelog or product updates page.
+- 为新版本准备 release notes。
+- 生成周报、月报或阶段性产品更新。
+- 为客户、运营、应用商店或官网 changelog 编写更新说明。
+- 把零散的技术提交整理成可发布的产品语言。
 
-## Workflow
+## 工作流
 
-1. Analyze git history based on the last git tag unless the user gives a different range.
-2. Group commits into logical categories such as features, improvements, bug fixes, breaking changes, and security changes.
-3. Rewrite technical commit messages into customer-facing language.
-4. Exclude internal-only noise such as refactors and test-only changes unless they matter to users.
-5. Produce a clean, structured changelog draft.
-6. Prefer interacting in Chinese.
+1. 若用户没有指定范围，默认从最近一个 git tag 到当前 HEAD 分析提交历史。
+2. 按用户价值分组，例如新功能、体验优化、问题修复、兼容性、安全性、破坏性变更。
+3. 将 commit 信息改写成用户可理解的中文表达。
+4. 过滤纯内部噪声，例如无用户影响的重构、测试调整、格式化和依赖维护。
+5. 对确实影响用户的技术变更，说明实际收益，而不是照搬实现细节。
+6. 输出结构清晰、可直接编辑发布的 Markdown 草稿。
 
-## Output Style
+## 输出要求
 
-Use clear Markdown. Prefer concise, user-facing language over raw commit wording.
+- 默认使用中文。
+- 标题、分类和条目要短而明确。
+- 不编造版本号和发布日期；无法确认时标注为待确认。
+- 保留重要风险或破坏性变更，不要为了好看而隐藏。
 
 ```markdown
 ## 1.0.1
-Released on 2024-10-13
+发布日期：2024-10-13
 
-### New
+### 新功能
 
-- Team Workspaces: Create separate workspaces for different projects and invite team members.
+- 团队工作区：可为不同项目创建独立工作区，并邀请成员协作。
 
-### Improvements
+### 优化
 
-- Faster Sync: Files now sync faster across devices.
+- 同步速度提升：跨设备文件同步更快。
 
-### Fixes
+### 修复
 
-- Fixed an issue where large images could fail to upload.
+- 修复大图上传可能失败的问题。
 ```

@@ -1,22 +1,30 @@
 ---
 name: plan-feature
-description: Create an implementation plan for a named feature without writing code. Use when the user asks to plan a feature, analyze integration points, or produce a feature implementation plan.
+description: 为指定功能创建中文实施计划，但不写实现代码。适用于用户要求分析代码结构、依赖、集成点、风险和分阶段开发方案。
 ---
 
 # Plan Feature Implementation
 
-Create a comprehensive implementation plan for the feature named by the user.
+为用户指定的功能创建完整中文实施计划，默认保存到 `docs/tasks/<feature-name>-plan.md`。本技能只做分析和计划，不写实现代码。
 
-## Workflow
+## 适用场景
 
-1. Read the PRD and feature spec.
-2. Analyze the existing codebase structure.
-3. Identify dependencies and integration points.
-4. Create a step-by-step implementation plan.
-5. Identify potential challenges and solutions.
-6. Estimate effort for each step.
-7. Create `docs/tasks/<feature-name>-plan.md`.
+- 用户想先评估功能怎么做，而不是立刻编码。
+- 需要分析现有代码结构、依赖、集成点、风险和工作量。
+- 需要生成可供评审或后续拆任务的实施计划。
 
-## Constraint
+## 工作流
 
-Do not write implementation code. This skill is for planning only.
+1. 确认功能名；如果无法推断，再询问用户。
+2. 阅读 PRD 和功能规格。
+3. 分析现有代码结构、模块边界和关键调用链。
+4. 识别依赖、集成点、数据迁移、兼容性和测试风险。
+5. 给出分阶段实施步骤。
+6. 为每一步估算复杂度和验证方式。
+7. 创建或更新 `docs/tasks/<feature-name>-plan.md`。
+
+## 约束
+
+- 不写实现代码。
+- 不修改业务文件，除非是创建或更新计划文档。
+- 计划要具体到可执行步骤，避免停留在抽象建议。

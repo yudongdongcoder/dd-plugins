@@ -1,8 +1,0 @@
-{
-  "name": "dd-git-workflow",
-  "description": "仓库专用 Git 工作流插件，提供面向本仓库插件改动的提交辅助技能。",
-  "version": "1.0.0",
-  "author": {
-    "name": "dong"
-  }
-}

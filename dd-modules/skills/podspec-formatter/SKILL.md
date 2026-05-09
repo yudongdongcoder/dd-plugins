@@ -1,36 +1,44 @@
 ---
 name: podspec-formatter
-description: Automatically format and optimize CocoaPods podspec files in the current directory. Use when the user asks to update podspec metadata, normalize versions, refresh homepage/source fields, or clean CocoaPods specifications.
+description: 自动格式化并优化当前仓库中的 CocoaPods podspec 文件。适用于更新 podspec 元数据、统一版本来源、刷新 homepage/source、整理 license 或清理内部依赖声明。
 ---
 
 # Podspec Formatter
 
-Automatically format and optimize all CocoaPods podspec files in the current directory.
+自动查找并优化当前目录及子目录中的 `.podspec` 文件，让模块元数据更准确、版本来源更统一、依赖声明更稳定。
 
-## Workflow
+## 适用场景
 
-1. Find all `.podspec` files in the current directory and subdirectories.
-2. Update `s.version` to:
+- 用户要求格式化、修复或统一 podspec。
+- 用户要求更新 CocoaPods 组件的版本、仓库地址、摘要、描述、license 或依赖声明。
+- 用户希望根据当前代码和仓库信息重新整理 podspec 元数据。
+
+## 工作流
+
+1. 使用 `rg --files -g '*.podspec'` 或等价方式查找所有 `.podspec` 文件。
+2. 阅读 podspec、README、源码目录和相关模块文件，理解组件真实能力。
+3. 将 `s.version` 更新为：
    ```ruby
    s.version = `scripts/version.sh`
    ```
-3. Review `s.summary` and `s.description`, then rewrite them based on the component's actual capabilities.
-4. Extract the git remote URL and use it to update:
+4. 基于组件能力重写 `s.summary` 和 `s.description`，避免空泛营销语和不准确描述。
+5. 读取 git remote，并用它更新：
    - `s.homepage`
    - `s.source`
-   Prefer the SSH repository URL when setting `s.source`.
-5. Replace `s.license` with:
+   设置 `s.source` 时优先使用 SSH 仓库地址。
+6. 将 `s.license` 替换为：
    ```ruby
    s.license = { :type => 'Copyright', :text => 'Copyright 2025 Boost VPN. All rights reserved.' }
    ```
-6. Identify internal dependencies that reference the current library and convert them to:
+7. 识别引用当前库版本的内部依赖，并转换为：
    ```ruby
    s.dependency 'XXX', "= #{s.version}"
    ```
-7. Output a summary of all changes made to each podspec file.
+8. 输出每个 podspec 的变更摘要。
 
-## Codex Notes
+## 执行原则
 
-- Inspect nearby source, README files, and podspec context before rewriting summaries or descriptions.
-- Keep edits scoped to podspec formatting unless the user asks for broader repository changes.
-- Prefer structured parsing or careful Ruby-aware edits when available; otherwise make minimal targeted replacements.
+- 先理解模块，再改摘要和描述；不要凭文件名猜能力。
+- 只修改 podspec 相关内容，除非用户明确要求扩大范围。
+- 优先做 Ruby 语义清晰、范围小的替换；避免大面积重排导致无关 diff。
+- 完成后说明改了哪些文件、哪些字段，以及是否有未能确认的信息。

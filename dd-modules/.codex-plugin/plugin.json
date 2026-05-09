@@ -15,8 +15,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "DD Modules",
-    "shortDescription": "Podspec formatting and changelog generation",
-    "longDescription": "Utilities for iOS module maintenance, including CocoaPods podspec cleanup and user-facing changelog generation from git history.",
+    "shortDescription": "Podspec 整理与更新日志生成",
+    "longDescription": "面向 iOS 模块维护的实用技能集合，支持清理 CocoaPods podspec 元数据，并根据 git 历史生成用户可读的中文更新日志。",
     "developerName": "dong",
     "category": "Engineering",
     "capabilities": [
@@ -24,8 +24,8 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Format the podspec files in this repo",
-      "Generate a user-facing changelog"
+      "整理这个仓库里的 podspec 文件",
+      "根据提交历史生成中文更新日志"
     ],
     "brandColor": "#2563EB",
     "screenshots": []

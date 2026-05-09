@@ -1,21 +1,30 @@
 ---
 name: generate-spec
-description: Generate a detailed feature specification from docs/PRD.md. Use when the user asks to create a spec for a named feature from an existing PRD.
+description: 基于 docs/PRD.md 为指定功能生成中文功能规格说明。适用于用户要求从 PRD 中提取某个 feature 的需求、验收标准、技术方案和实现边界。
 ---
 
 # Generate Feature Specification
 
-Read the PRD at `docs/PRD.md` and create a detailed specification for the feature named by the user.
+读取 `docs/PRD.md`，为用户指定的功能生成详细中文规格说明，并默认保存到 `docs/specs/<feature-name>.md`。
 
-## Workflow
+## 适用场景
 
-1. Extract relevant user stories and requirements.
-2. Define acceptance criteria.
-3. Design the technical architecture.
-4. Create the spec file at `docs/specs/<feature-name>.md`.
+- PRD 已存在，用户想为某个功能生成更细的 spec。
+- 需要把产品需求转换成工程可理解的功能边界、数据流、状态、接口和验收标准。
+- 后续会继续生成任务拆解或进入实现。
 
-## Codex Notes
+## 工作流
 
-- Ask for the feature name only if it cannot be inferred from the user's request.
-- Think carefully about the technical design before writing.
-- Preserve traceability from PRD requirements to spec decisions.
+1. 确认功能名；如果无法从用户请求中推断，再询问用户。
+2. 阅读 `docs/PRD.md`，提取与该功能相关的目标、用户故事和约束。
+3. 定义功能范围、非目标和验收标准。
+4. 设计技术方案，包括关键模块、数据结构、接口、状态流和错误处理。
+5. 记录与 PRD 的对应关系，保留需求到设计的可追溯性。
+6. 创建或更新 `docs/specs/<feature-name>.md`。
+
+## 输出要求
+
+- 默认使用中文。
+- 明确列出假设和待确认问题。
+- 不写实现代码；只写规格和设计。
+- 让后续 `generate-tasks` 能直接基于该文档拆任务。

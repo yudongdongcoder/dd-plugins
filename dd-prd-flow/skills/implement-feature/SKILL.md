@@ -1,21 +1,32 @@
 ---
 name: implement-feature
-description: Implement the current uncompleted task for a feature from its spec and task breakdown. Use when the user asks to implement a named feature managed by the PRD flow.
+description: 按 PRD 工作流实现指定功能的当前未完成任务。适用于用户要求根据 spec 和 tasks 逐步开发、测试、更新任务进度并完成验证。
 ---
 
 # Implement Feature
 
-Follow the PRD workflow for the feature named by the user.
+按照 PRD 工作流，为用户指定的功能实现当前未完成任务。每轮只推进一个清晰任务，完成后汇报并等待用户确认是否继续。
 
-## Workflow
+## 适用场景
 
-1. Read `docs/specs/<feature-name>.md` for requirements.
-2. Read `docs/tasks/<feature-name>-tasks.md` for the task breakdown.
-3. Implement the current uncompleted task.
-4. Write tests for the implementation.
-5. Update task progress in the tasks file.
-6. Build and test.
+- 用户已经有 `docs/specs/<feature-name>.md` 和 `docs/tasks/<feature-name>-tasks.md`。
+- 用户要求实现某个 PRD flow 管理的功能。
+- 需要边实现、边测试、边更新任务状态。
 
-## Stopping Point
+## 工作流
 
-Complete one task at a time. After finishing the current task, summarize what changed, report verification results, and wait for the user's approval before taking the next task.
+1. 确认功能名；如果无法推断，再询问用户。
+2. 阅读 `docs/specs/<feature-name>.md`，理解需求和验收标准。
+3. 阅读 `docs/tasks/<feature-name>-tasks.md`，找到当前第一个未完成任务。
+4. 分析相关代码，按仓库既有模式实现该任务。
+5. 补充或更新必要测试。
+6. 运行合适的构建、测试或静态检查。
+7. 更新任务文件中的进度和必要备注。
+8. 汇报改动、验证结果和剩余任务。
+
+## 执行原则
+
+- 一次只完成一个任务，避免跨任务扩大范围。
+- 不跳过测试；如果无法运行测试，要说明原因。
+- 不重写无关代码，不回滚用户已有改动。
+- 完成当前任务后停下，等待用户确认再继续下一个任务。

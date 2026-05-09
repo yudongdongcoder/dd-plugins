@@ -1,26 +1,33 @@
 ---
 name: create-prd
-description: Create a new product requirements document from a requirements discussion. Use when the user asks to draft a PRD, product requirements document, or requirements plan from conversation context.
+description: 根据需求讨论创建中文 PRD 文档。适用于用户要求起草产品需求文档、整理需求、沉淀问题背景、目标用户、成功指标、功能范围和验收标准。
 ---
 
 # Create Product Requirements Document
 
-Based on the discussion, create a comprehensive PRD in `docs/PRD.md`.
+根据当前讨论和已有资料，创建结构完整、可继续拆解规格和任务的中文 PRD，默认保存到 `docs/PRD.md`。
 
-## Required Structure
+## 适用场景
 
-1. Executive Summary
-2. Problem Statement
-3. Target Users
-4. Success Metrics
-5. Core Features with user stories and acceptance criteria
-6. Non-Functional Requirements
-7. Technical Constraints
-8. Timeline
+- 用户描述了一个产品想法，需要整理成 PRD。
+- 用户已有零散需求，需要补齐背景、目标、范围和验收标准。
+- 后续会基于 PRD 继续生成 feature spec 或任务拆解。
 
-## Workflow
+## 文档结构
 
-- Ask clarifying questions before writing when the requirements are still materially ambiguous.
-- If the discussion already contains enough detail, proceed with reasonable assumptions and record them in the PRD.
-- Think carefully about the product, user, and implementation constraints before creating the document.
-- Keep the PRD readable, concrete, and useful for later spec and task generation.
+1. 概要
+2. 问题背景
+3. 目标用户
+4. 成功指标
+5. 核心功能、用户故事和验收标准
+6. 非功能需求
+7. 技术约束
+8. 里程碑或时间规划
+
+## 工作流
+
+- 如果需求仍有关键歧义，先提出少量高价值澄清问题。
+- 如果信息已经足够，直接推进，并在 PRD 中记录合理假设。
+- 明确区分“必须做”“可以后续做”和“不在本期范围内”的内容。
+- 用户故事要绑定验收标准，方便后续生成规格和任务。
+- 输出前检查文档是否具体、可执行、没有明显空话。
