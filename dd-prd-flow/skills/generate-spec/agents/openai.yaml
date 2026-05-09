@@ -1,4 +1,4 @@
 interface:
   display_name: "DD Generate Feature Spec"
   short_description: "Generate 中文 feature spec and acceptance criteria from PRD feature map"
-  default_prompt: "使用 $dd-generate-spec，从 docs/PRD.md 为指定功能生成功能规格。"
+  default_prompt: "使用 $generate-spec，从 docs/PRD.md 为指定功能生成功能规格。"

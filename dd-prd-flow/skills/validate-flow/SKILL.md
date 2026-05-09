@@ -1,5 +1,5 @@
 ---
-name: dd-validate-flow
+name: validate-flow
 description: 校验 dd-prd-flow 文档的一致性、完整性和实现就绪度。适用于用户要求 review、audit、check、verify、reconcile docs/PRD.md、feature spec、implementation plan、task checklist，在实现前、文档变更后或需求漂移时发现阻塞问题、风险和可改进项。
 ---
 

@@ -1,6 +1,6 @@
 ---
-name: dd-generate-spec
-description: 从 docs/PRD.md 为单个 feature id 生成中文功能规格 docs/specs/{feature-id}.md。适用于用户要求展开 PRD 功能、补充工程可读范围、非目标、验收标准、数据模型、状态流程、接口、错误处理、依赖关系、可追溯性，或为 dd-plan-feature 和 dd-generate-tasks 准备 feature spec。
+name: generate-spec
+description: 从 docs/PRD.md 为单个 feature id 生成中文功能规格 docs/specs/{feature-id}.md。适用于用户要求展开 PRD 功能、补充工程可读范围、非目标、验收标准、数据模型、状态流程、接口、错误处理、依赖关系、可追溯性，或为 plan-feature 和 generate-tasks 准备 feature spec。
 ---
 
 # Generate Feature Spec
@@ -11,7 +11,7 @@ description: 从 docs/PRD.md 为单个 feature id 生成中文功能规格 docs/
 
 - 默认使用中文撰写；保留 `feature id`、路径、接口名、事件名、代码符号和字段名原文。
 - 写规格，不写实现代码。
-- 规格必须可被 `dd-plan-feature` 用来分析代码影响，可被 `dd-generate-tasks` 用来拆任务。
+- 规格必须可被 `plan-feature` 用来分析代码影响，可被 `generate-tasks` 用来拆任务。
 - 不确定的技术细节写成假设或待确认问题，不要包装成事实。
 
 ## 工作流

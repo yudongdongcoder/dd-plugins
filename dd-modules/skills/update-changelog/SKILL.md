@@ -1,5 +1,5 @@
 ---
-name: dd-update-changelog
+name: update-changelog
 description: 根据 git 提交历史生成面向用户的中文更新日志。适用于发布说明、版本更新摘要、App Store 更新文案、客户可读 changelog 或阶段性产品更新。
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: dd-implement-feature
+name: implement-feature
 description: 按 dd-prd-flow 文档实现某个功能的下一个未完成任务。适用于用户要求编码、继续实现、执行任务、完成 feature task，基于 docs/specs、可选 plan 和 docs/tasks 清单修改代码、补测试、运行验证、更新任务进度并输出中文实现报告。
 ---
 
@@ -37,12 +37,12 @@ description: 按 dd-prd-flow 文档实现某个功能的下一个未完成任务
 ```
 
 - 如果验证失败但代码已修改，不要勾选任务；记录失败命令和需要处理的问题。
-- 如果发现任务与 spec 不一致，记录偏差并建议运行 `dd-validate-flow`。
+- 如果发现任务与 spec 不一致，记录偏差并建议运行 `validate-flow`。
 
 ## 防护规则
 
 - 不跳过验证；命令无法运行时说明原因和残余风险。
 - 不扩大范围到相邻功能，除非当前任务无法独立工作。
-- 不在缺少 spec 或任务清单时直接编码；先使用 `dd-generate-spec` 或 `dd-generate-tasks`，或向用户确认绕过流程。
+- 不在缺少 spec 或任务清单时直接编码；先使用 `generate-spec` 或 `generate-tasks`，或向用户确认绕过流程。
 - 不把“顺手重构”混入功能任务；必要重构必须服务于当前验收标准。
 - 完成报告要短，重点放在用户能继续推进的信息上。

@@ -1,5 +1,5 @@
 ---
-name: dd-plan-feature
+name: plan-feature
 description: 为单个 PRD-flow 功能生成中文代码感知实施计划 docs/tasks/{feature-id}-plan.md，且不修改业务代码。适用于用户要求根据 docs/PRD.md 和 docs/specs 分析如何实现、检查代码结构、识别集成点、依赖、迁移、风险、阶段、验证策略，或在拆任务和编码前写 implementation plan。
 ---
 
@@ -11,7 +11,7 @@ description: 为单个 PRD-flow 功能生成中文代码感知实施计划 docs/
 
 - 默认使用中文撰写；保留文件路径、命令、代码符号、接口名和 `feature id` 原文。
 - 只分析和写计划，不实现功能代码。
-- 计划要服务后续 `dd-generate-tasks`，所以必须具体到可拆任务的模块、文件、命令和风险。
+- 计划要服务后续 `generate-tasks`，所以必须具体到可拆任务的模块、文件、命令和风险。
 - 如果现有代码结构不足以判断，写明假设和下一步最安全的检查方式。
 
 ## 工作流

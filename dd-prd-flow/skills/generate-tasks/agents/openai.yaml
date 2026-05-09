@@ -1,4 +1,4 @@
 interface:
   display_name: "DD Generate Task List"
   short_description: "Split feature spec and implementation plan into 可执行 task checklist"
-  default_prompt: "使用 $dd-generate-tasks，把这个功能规格拆成可执行任务清单。"
+  default_prompt: "使用 $generate-tasks，把这个功能规格拆成可执行任务清单。"

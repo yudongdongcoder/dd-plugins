@@ -1,4 +1,4 @@
 interface:
   display_name: "DD Validate PRD Flow"
   short_description: "Check PRD, spec, plan, and tasks for 一致性 and implementation readiness"
-  default_prompt: "使用 $dd-validate-flow，检查这组 PRD-flow 文档是否可以进入实现。"
+  default_prompt: "使用 $validate-flow，检查这组 PRD-flow 文档是否可以进入实现。"
