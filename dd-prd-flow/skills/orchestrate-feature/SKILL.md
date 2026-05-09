@@ -1,9 +1,9 @@
 ---
-name: orchestrate-feature
-description: 判断并执行 dd-prd-flow 的下一步。适用于用户询问下一步做什么、要求端到端推进 PRD 工作流、继续某个 feature、协调 create-prd、generate-spec、plan-feature、generate-tasks、validate-flow、implement-feature，或根据 docs 中已有文件选择合适阶段。
+name: dd-orchestrate-feature
+description: 判断并执行 dd-prd-flow 的下一步。适用于用户询问下一步做什么、要求端到端推进 PRD 工作流、继续某个 feature、协调 dd-create-prd、dd-generate-spec、dd-plan-feature、dd-generate-tasks、dd-validate-flow、dd-implement-feature，或根据 docs 中已有文件选择合适阶段。
 ---
 
-# 编排功能流程
+# Orchestrate Feature Flow
 
 作为 PRD 驱动流程的控制器，检查仓库状态，选择下一阶段并执行；如果前置条件缺失，明确报告缺口。
 
@@ -16,13 +16,13 @@ description: 判断并执行 dd-prd-flow 的下一步。适用于用户询问下
 
 ## 决策顺序
 
-1. 如果 `docs/PRD.md` 缺失，或用户仍处在产品想法层面，执行 `create-prd`。
+1. 如果 `docs/PRD.md` 缺失，或用户仍处在产品想法层面，执行 `dd-create-prd`。
 2. 如果无法确定目标 `feature id`，先从 PRD 功能地图或用户请求中推断；仍无法判断时提问。
-3. 如果目标功能缺少 `docs/specs/<feature-id>.md`，执行 `generate-spec`。
-4. 如果目标功能缺少 `docs/tasks/<feature-id>-plan.md`，执行 `plan-feature`。
-5. 如果目标功能缺少 `docs/tasks/<feature-id>-tasks.md`，执行 `generate-tasks`。
-6. 如果用户要求检查、一致性不明，或文档已有明显漂移，执行 `validate-flow`。
-7. 如果任务清单存在未完成任务，且用户要求构建、继续或执行，执行 `implement-feature`。
+3. 如果目标功能缺少 `docs/specs/<feature-id>.md`，执行 `dd-generate-spec`。
+4. 如果目标功能缺少 `docs/tasks/<feature-id>-plan.md`，执行 `dd-plan-feature`。
+5. 如果目标功能缺少 `docs/tasks/<feature-id>-tasks.md`，执行 `dd-generate-tasks`。
+6. 如果用户要求检查、一致性不明，或文档已有明显漂移，执行 `dd-validate-flow`。
+7. 如果任务清单存在未完成任务，且用户要求构建、继续或执行，执行 `dd-implement-feature`。
 8. 如果所有任务已完成，总结状态并建议最终验证、发布或回归检查。
 
 ## 工作流

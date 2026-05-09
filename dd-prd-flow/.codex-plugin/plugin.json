@@ -37,6 +37,8 @@
       "按任务清单实现当前未完成任务"
     ],
     "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

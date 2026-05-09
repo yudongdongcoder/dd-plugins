@@ -28,6 +28,8 @@
       "根据提交历史生成中文更新日志"
     ],
     "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

@@ -1,9 +1,9 @@
 ---
-name: generate-tasks
-description: 将 PRD-flow 的 feature spec 和可选实施计划拆成中文可执行任务清单 docs/tasks/{feature-id}-tasks.md。适用于用户要求生成开发任务、依赖顺序、工作包、复选框清单、测试步骤、文档更新、迁移步骤，或从功能规格和 plan 进入 implement-feature。
+name: dd-generate-tasks
+description: 将 PRD-flow 的 feature spec 和可选实施计划拆成中文可执行任务清单 docs/tasks/{feature-id}-tasks.md。适用于用户要求生成开发任务、依赖顺序、工作包、复选框清单、测试步骤、文档更新、迁移步骤，或从功能规格和 plan 进入 dd-implement-feature。
 ---
 
-# 生成任务清单
+# Generate Task List
 
 为一个功能创建按依赖排序的实现任务。默认产物：`docs/tasks/<feature-id>-tasks.md`。
 
@@ -49,6 +49,6 @@ description: 将 PRD-flow 的 feature spec 和可选实施计划拆成中文可�
 ## 质量标准
 
 - 避免“实现功能”“处理边界情况”这类不可验收任务。
-- 每个任务都要包含停止条件：完成到什么程度即可交给 `implement-feature`。
+- 每个任务都要包含停止条件：完成到什么程度即可交给 `dd-implement-feature`。
 - 如果 plan 和 spec 不一致，新增“冲突/待确认”任务或备注，不要静默选择一边。
 - 完成后说明任务数量、首个建议执行任务和任何阻塞问题。

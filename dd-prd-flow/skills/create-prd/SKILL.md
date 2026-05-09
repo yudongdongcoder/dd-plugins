@@ -1,9 +1,9 @@
 ---
-name: create-prd
-description: 创建或重写中文产品需求文档 docs/PRD.md。适用于用户提供产品想法、需求讨论、草稿、现有项目说明，或要求生成、合并、更新 PRD，定义 MVP 范围、非目标、用户流程、功能地图、feature id、用户故事和验收标准，为 dd-prd-flow 后续 generate-spec、plan-feature、generate-tasks 做准备。
+name: dd-create-prd
+description: 创建或重写中文产品需求文档 docs/PRD.md。适用于用户提供产品想法、需求讨论、草稿、现有项目说明，或要求生成、合并、更新 PRD，定义 MVP 范围、非目标、用户流程、功能地图、feature id、用户故事和验收标准，为 dd-prd-flow 后续 dd-generate-spec、dd-plan-feature、dd-generate-tasks 做准备。
 ---
 
-# 创建 PRD
+# Create PRD
 
 创建项目的权威产品需求文档。默认产物：`docs/PRD.md`。
 
@@ -56,5 +56,5 @@ description: 创建或重写中文产品需求文档 docs/PRD.md。适用于用�
 - 用户故事要能被验收标准验证。
 - 验收标准要具体，避免“体验良好”“足够稳定”这类空泛表达。
 - 约束要现实，包括时间、维护成本、依赖风险、数据复杂度和验证成本。
-- 与后续 `generate-spec` 对齐：每个 P0/P1 功能都应能直接展开为独立 spec。
+- 与后续 `dd-generate-spec` 对齐：每个 P0/P1 功能都应能直接展开为独立 spec。
 - 完成后简要说明创建或更新了哪些部分，以及最适合下一步生成 spec 的功能。

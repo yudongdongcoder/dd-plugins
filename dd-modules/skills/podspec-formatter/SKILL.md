@@ -1,5 +1,5 @@
 ---
-name: podspec-formatter
+name: dd-podspec-formatter
 description: 自动格式化并优化当前仓库中的 CocoaPods podspec 文件。适用于更新 podspec 元数据、统一版本来源、刷新 homepage/source、整理 license 或清理内部依赖声明。
 ---
 

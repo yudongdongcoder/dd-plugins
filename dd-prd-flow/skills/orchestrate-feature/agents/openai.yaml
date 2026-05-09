@@ -1,4 +1,4 @@
 interface:
-  display_name: "编排 PRD Flow"
-  short_description: "根据现有文档判断并执行下一步 PRD Flow 工作流"
-  default_prompt: "使用 $orchestrate-feature，判断并执行当前项目下一步 PRD 工作流。"
+  display_name: "DD Orchestrate PRD Flow"
+  short_description: "Detect 当前阶段 and run the next PRD Flow step from existing docs"
+  default_prompt: "使用 $dd-orchestrate-feature，判断并执行当前项目下一步 PRD 工作流。"

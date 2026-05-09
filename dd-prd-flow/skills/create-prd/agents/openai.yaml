@@ -1,4 +1,4 @@
 interface:
-  display_name: "创建 PRD"
-  short_description: "把产品想法整理成可执行的中文 PRD 文档与功能地图"
-  default_prompt: "使用 $create-prd，把这次需求讨论整理成中文 PRD。"
+  display_name: "DD Create PRD"
+  short_description: "Turn 产品想法 into a structured 中文 PRD with feature map"
+  default_prompt: "使用 $dd-create-prd，把这次需求讨论整理成中文 PRD。"
