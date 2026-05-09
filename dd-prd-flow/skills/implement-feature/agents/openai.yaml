@@ -1,4 +1,4 @@
 interface:
-  display_name: "Implement Feature"
-  short_description: "Build the next tracked task"
-  default_prompt: "Use $implement-feature to implement the next unfinished task for this feature."
+  display_name: "实现功能任务"
+  short_description: "按任务清单实现下一个功能任务并更新验证记录和状态报告"
+  default_prompt: "使用 $implement-feature，实现这个功能的下一个未完成任务。"

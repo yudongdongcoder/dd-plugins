@@ -1,22 +1,30 @@
 ---
 name: generate-spec
-description: Generate a detailed Chinese feature specification from docs/PRD.md for one selected feature. Use when the user asks to expand a PRD feature into engineering-readable scope, non-goals, acceptance criteria, data model, state flow, interfaces, errors, dependencies, traceability, or a docs/specs feature file for later planning and tasks.
+description: 从 docs/PRD.md 为单个 feature id 生成中文功能规格 docs/specs/{feature-id}.md。适用于用户要求展开 PRD 功能、补充工程可读范围、非目标、验收标准、数据模型、状态流程、接口、错误处理、依赖关系、可追溯性，或为 plan-feature 和 generate-tasks 准备 feature spec。
 ---
 
-# Generate Feature Spec
+# 生成功能规格
 
-Turn one PRD feature into an implementation-ready specification. Default output: `docs/specs/<feature-id>.md`.
+将 PRD 中的一个功能展开为实现前可评审的规格文档。默认产物：`docs/specs/<feature-id>.md`。
 
-## Workflow
+## 语言与边界
 
-1. Identify the target `feature id` from the user request or `docs/PRD.md`; ask only if it cannot be inferred.
-2. Read `docs/PRD.md` and extract relevant goals, user stories, constraints, dependencies, and non-goals.
-3. Inspect existing docs or code only when needed to avoid inventing incompatible interfaces.
-4. Define product scope, implementation boundaries, state transitions, data needs, and acceptance criteria.
-5. Record assumptions, open questions, and traceability back to PRD sections or feature-map entries.
-6. Create or update `docs/specs/<feature-id>.md`.
+- 默认使用中文撰写；保留 `feature id`、路径、接口名、事件名、代码符号和字段名原文。
+- 写规格，不写实现代码。
+- 规格必须可被 `plan-feature` 用来分析代码影响，可被 `generate-tasks` 用来拆任务。
+- 不确定的技术细节写成假设或待确认问题，不要包装成事实。
 
-## Required Structure
+## 工作流
+
+1. 从用户请求或 `docs/PRD.md` 中识别目标 `feature id`；无法推断时再提问。
+2. 读取 `docs/PRD.md`，提取对应功能的目标、用户故事、验收标准、约束、依赖和非目标。
+3. 如果已有 `docs/specs/<feature-id>.md`，先读取并判断是更新、重写还是补齐缺口。
+4. 只在避免接口、术语或架构不兼容时检查现有 docs 或代码。
+5. 定义产品范围、实现边界、状态流、数据需求、错误处理和验收标准。
+6. 记录 PRD 对应关系、假设、待确认问题和风险。
+7. 创建或更新 `docs/specs/<feature-id>.md`。
+
+## 必需结构
 
 1. 功能概述
 2. PRD 对应关系
@@ -30,10 +38,17 @@ Turn one PRD feature into an implementation-ready specification. Default output:
 10. 测试与验证建议
 11. 假设、待确认问题、风险
 
-## Quality Bar
+## 规格契约
 
-- Write specifications, not implementation code.
-- Be concrete enough for `plan-feature` and `generate-tasks`.
-- Preserve requirement traceability so later implementation can justify decisions.
-- Prefer the repo's existing architecture and terminology when known.
-- Mark uncertain technical details as assumptions instead of presenting guesses as facts.
+- 每条重要验收标准都要能追溯到 PRD 的用户故事、功能地图或明确假设。
+- 数据对象要说明字段、必填性、约束、生命周期和兼容性影响。
+- 流程和状态要覆盖成功路径、取消/失败路径、重试、空状态和边界输入。
+- 接口或集成点要说明调用方、触发条件、输入输出和错误语义；无法确定时标记为待确认。
+- 权限、安全、性能和可访问性要求只写与该功能相关且可验证的内容。
+
+## 质量标准
+
+- 具体到足以支持代码感知计划，但不要提前决定所有内部实现。
+- 使用仓库已有术语和架构命名；未知时保留中性描述。
+- 如果 PRD 与已有 spec 冲突，显式记录冲突并选择最小合理更新。
+- 完成后说明目标 `feature id`、产物路径、关键假设和建议下一步。

@@ -1,22 +1,30 @@
 ---
 name: create-prd
-description: Create or rewrite a concise Chinese Product Requirements Document from product ideas, requirement discussions, drafts, or existing project notes. Use when the user asks to draft, merge, update, or normalize a PRD; define MVP scope, non-goals, user flows, feature IDs, acceptance criteria, and implementation-ready product boundaries for later PRD-flow specs and tasks.
+description: 创建或重写中文产品需求文档 docs/PRD.md。适用于用户提供产品想法、需求讨论、草稿、现有项目说明，或要求生成、合并、更新 PRD，定义 MVP 范围、非目标、用户流程、功能地图、feature id、用户故事和验收标准，为 dd-prd-flow 后续 generate-spec、plan-feature、generate-tasks 做准备。
 ---
 
-# Create PRD
+# 创建 PRD
 
-Create the authoritative product document for the project. Default output: `docs/PRD.md`.
+创建项目的权威产品需求文档。默认产物：`docs/PRD.md`。
 
-## Workflow
+## 语言与边界
 
-1. Read the conversation and any user-provided requirement drafts or notes.
-2. If updating an existing project PRD, read `docs/PRD.md` first.
-3. Merge inputs into one clear PRD instead of lightly editing an old structure.
-4. Ask only when product direction, target users, core value, or MVP boundary is too unclear to proceed.
-5. When reasonable assumptions are enough, proceed and record them in the PRD.
-6. Save or update `docs/PRD.md`.
+- 默认使用中文撰写；保留 `feature id`、文件路径、API 名称、代码符号和第三方产品名的原文。
+- 面向独立开发者和 AI coding agent 写作，优先可执行、可验证、可拆解。
+- 只在产品方向、目标用户、核心价值或 MVP 边界无法合理推断时提问。
+- 可以做合理假设，但必须在 PRD 的“假设、待确认问题、风险”中记录。
+- 写产品意图、范围和验收标准，不写详细代码设计。
 
-## Required Structure
+## 工作流
+
+1. 阅读对话、用户提供的需求草稿、项目说明和已有文档。
+2. 如果是在更新项目，先读取 `docs/PRD.md`，识别已有功能、范围和 `feature id`。
+3. 将输入整合成一份清晰 PRD，不要只做表面润色。
+4. 明确 MVP、后续范围和不在范围，避免把所有想法都塞进首版。
+5. 为核心功能建立稳定功能地图，确保后续 spec/task 可以按 `feature id` 追踪。
+6. 创建或更新 `docs/PRD.md`。
+
+## 必需结构
 
 1. 产品概述
 2. 问题背景与目标用户
@@ -31,21 +39,22 @@ Create the authoritative product document for the project. Default output: `docs
 11. 技术、资源与独立开发者约束
 12. 假设、待确认问题、风险
 
-## Feature Map Contract
+## 功能地图契约
 
-Every core feature must include:
+每个核心功能必须包含：
 
-- `feature id`: stable English kebab-case, usable as a filename, such as `auth-login`.
-- Priority: `P0`, `P1`, or `P2`.
-- User value: what the user can accomplish and why it matters.
-- Dependencies: preceding features, data objects, third-party services, or `无`.
-- Spec target: suggested path like `docs/specs/<feature-id>.md`.
+- `feature id`：稳定英文 kebab-case，可作为文件名，例如 `auth-login`。
+- 优先级：`P0`、`P1` 或 `P2`。
+- 用户价值：用户能完成什么，以及为什么重要。
+- 依赖关系：前置功能、数据对象、第三方服务，或 `无`。
+- Spec 目标路径：例如 `docs/specs/<feature-id>.md`。
 
-## Quality Bar
+更新已有 PRD 时，优先保留已被 spec、plan、tasks 使用的 `feature id`；确需重命名时，在 PRD 中记录映射和原因。
 
-- Write in practical Chinese for an independent developer and AI coding agent.
-- Keep the PRD about product intent, scope, boundaries, and acceptance, not detailed code design.
-- Separate MVP, later improvements, and explicit non-goals.
-- Make user stories testable with concrete acceptance criteria.
-- Include realistic solo-developer constraints: time, maintenance, dependency risk, data complexity, and validation cost.
-- Ensure the PRD can directly feed `generate-spec`.
+## 质量标准
+
+- 用户故事要能被验收标准验证。
+- 验收标准要具体，避免“体验良好”“足够稳定”这类空泛表达。
+- 约束要现实，包括时间、维护成本、依赖风险、数据复杂度和验证成本。
+- 与后续 `generate-spec` 对齐：每个 P0/P1 功能都应能直接展开为独立 spec。
+- 完成后简要说明创建或更新了哪些部分，以及最适合下一步生成 spec 的功能。

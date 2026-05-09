@@ -1,4 +1,4 @@
 interface:
-  display_name: "Plan Feature"
-  short_description: "Create a code-aware build plan"
-  default_prompt: "Use $plan-feature to analyze this feature and write an implementation plan."
+  display_name: "制定实施计划"
+  short_description: "结合代码结构为功能生成实施计划、风险取舍与验证策略"
+  default_prompt: "使用 $plan-feature，为指定功能生成代码感知实施计划。"

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Create PRD"
-  short_description: "Draft a PRD for AI execution"
-  default_prompt: "Use $create-prd to turn this product idea into a concise Chinese PRD."
+  display_name: "创建 PRD"
+  short_description: "把产品想法整理成可执行的中文 PRD 文档与功能地图"
+  default_prompt: "使用 $create-prd，把这次需求讨论整理成中文 PRD。"

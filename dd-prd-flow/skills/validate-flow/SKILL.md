@@ -1,35 +1,42 @@
 ---
 name: validate-flow
-description: Validate consistency and readiness across dd-prd-flow documents for one feature or the whole PRD. Use when the user asks to review, audit, check, verify, or reconcile docs/PRD.md, feature specs, implementation plans, and task checklists before implementation, after changes, or when requirements drift is suspected.
+description: 校验 dd-prd-flow 文档的一致性、完整性和实现就绪度。适用于用户要求 review、audit、check、verify、reconcile docs/PRD.md、feature spec、implementation plan、task checklist，在实现前、文档变更后或需求漂移时发现阻塞问题、风险和可改进项。
 ---
 
-# Validate Flow
+# 校验 PRD Flow
 
-Check whether PRD-flow documents are consistent, complete, and ready for implementation. Default output: update docs only when the user asks; otherwise report findings.
+检查 PRD-flow 文档是否一致、完整并准备好进入实现。默认只报告问题；只有用户要求修复时才更新文档。
 
-## Workflow
+## 语言与边界
 
-1. Identify the target `feature id`, or validate the whole flow if no single feature is named.
-2. Read `docs/PRD.md`.
-3. For each target feature, read existing spec, plan, and task files.
-4. Compare feature IDs, priorities, scope, non-goals, acceptance criteria, dependencies, and validation steps.
-5. Inspect code only when validating implementation readiness or when docs reference existing modules.
-6. Report blocking issues first, then warnings, then optional improvements.
-7. If the user asks to fix docs, update the smallest affected PRD-flow files.
+- 默认使用中文报告；保留路径、命令、`feature id`、任务 ID 和代码标识符原文。
+- 先报告阻塞问题，再报告风险和可改进项。
+- 不为了让流程看起来完整而补造需求；只能基于现有文档和可验证代码事实判断。
+- 用户要求修复时，只更新最小受影响的 PRD-flow 文档。
 
-## Checks
+## 工作流
 
-- PRD feature map contains stable feature IDs and matching spec paths.
-- Spec scope and non-goals match the PRD.
-- Acceptance criteria appear in spec and are represented by tasks or verification steps.
-- Plan references real modules or clearly marked assumptions.
-- Task checklist is ordered by dependency and each task has acceptance and verification.
-- Implementation is not scheduled before unresolved blockers.
-- Open questions and risks are visible instead of silently dropped.
+1. 识别目标 `feature id`；如果没有指定，校验整个 PRD-flow。
+2. 读取 `docs/PRD.md`。
+3. 对目标功能读取已有 spec、plan 和 tasks 文件。
+4. 比对功能 ID、优先级、范围、非目标、验收标准、依赖、风险和验证步骤。
+5. 只有在验证实现就绪度或文档引用现有模块时检查代码。
+6. 按严重程度报告发现，并说明影响和建议修复位置。
+7. 如果用户要求修复文档，更新最小相关文件并说明变更。
 
-## Report Format
+## 检查项
 
-Use this order:
+- PRD 功能地图包含稳定 `feature id`，并指向匹配 spec 路径。
+- Spec 的范围、非目标和验收标准与 PRD 一致。
+- 关键验收标准在任务或验证步骤中有对应覆盖。
+- 实施计划引用了真实模块、命令或清晰标注的假设。
+- Task checklist 按依赖排序，每个任务有目标、验收标准和验证方式。
+- 实现前没有未解决的阻塞问题，例如缺少数据模型、权限规则或核心接口。
+- 开放问题和风险被显式保留，没有在文档链路中丢失。
+
+## 报告格式
+
+使用以下顺序：
 
 1. 阻塞问题
 2. 重要风险
@@ -37,4 +44,4 @@ Use this order:
 4. 已确认一致的部分
 5. 建议下一步
 
-If no issues are found, say the flow is ready and list any remaining test or implementation risks.
+每条问题尽量包含：位置、影响、建议修复方式。没有问题时，明确说明流程已准备好，并列出剩余测试或实现风险。

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Validate Flow"
-  short_description: "Check PRD/spec/task consistency"
-  default_prompt: "Use $validate-flow to check whether this PRD workflow is ready to implement."
+  display_name: "校验 PRD Flow"
+  short_description: "检查 PRD、规格、计划和任务之间的一致性与就绪度"
+  default_prompt: "使用 $validate-flow，检查这组 PRD-flow 文档是否可以进入实现。"

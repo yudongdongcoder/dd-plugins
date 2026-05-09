@@ -1,29 +1,48 @@
 ---
 name: implement-feature
-description: Implement the next unfinished task for a PRD-flow feature using its spec, optional plan, and task checklist under docs. Use when the user asks to code, continue, execute, or complete a feature task with tests, verification, task progress updates, and a concise implementation report.
+description: 按 dd-prd-flow 文档实现某个功能的下一个未完成任务。适用于用户要求编码、继续实现、执行任务、完成 feature task，基于 docs/specs、可选 plan 和 docs/tasks 清单修改代码、补测试、运行验证、更新任务进度并输出中文实现报告。
 ---
 
-# Implement Feature
+# 实现功能任务
 
-Implement the next unfinished task for one PRD-flow feature. Default behavior: complete one clear task per run, then report status.
+实现一个 PRD-flow 功能的下一个明确任务。默认行为：每次完成一个可验证任务，然后报告状态。
 
-## Workflow
+## 语言与边界
 
-1. Identify the target `feature id`; ask only if it cannot be inferred.
-2. Read `docs/specs/<feature-id>.md`.
-3. Read `docs/tasks/<feature-id>-plan.md` if it exists.
-4. Read `docs/tasks/<feature-id>-tasks.md` and select the first unchecked task unless the user names a task ID.
-5. Inspect the relevant code and follow the repo's existing patterns.
-6. Make the smallest code changes that satisfy the selected task.
-7. Add or update focused tests when the task changes behavior.
-8. Run appropriate build, test, lint, or manual verification commands.
-9. Update the task checklist with completion status and brief verification notes.
-10. Report changed files, verification results, and remaining next task.
+- 默认用中文沟通和更新任务说明；保留代码、命令、路径、错误信息和标识符原文。
+- 以任务清单为边界；除非用户明确要求，不一次性实现多个独立任务。
+- 只做满足当前任务所需的最小代码改动。
+- 不覆盖无关用户改动；遇到相关未提交改动时先理解并顺着现状修改。
 
-## Guardrails
+## 工作流
 
-- Do not skip verification. If a command cannot run, explain why and state residual risk.
-- Do not broaden scope beyond the selected task unless required to make it work.
-- Do not overwrite unrelated user changes.
-- If the task file is missing or too vague, stop and use `generate-tasks` or ask for clarification.
-- If implementation reveals spec/task drift, update the task note and recommend `validate-flow`.
+1. 识别目标 `feature id`；无法从请求、任务文件或 spec 推断时再提问。
+2. 读取 `docs/specs/<feature-id>.md`。
+3. 如果存在 `docs/tasks/<feature-id>-plan.md`，读取它。
+4. 读取 `docs/tasks/<feature-id>-tasks.md`，默认选择第一个未勾选任务；如果用户指定任务 ID，执行指定任务。
+5. 检查相关代码、测试和配置，遵循仓库已有模式。
+6. 实现当前任务需要的最小改动。
+7. 行为变化必须补充或更新聚焦测试；无法补测试时说明原因。
+8. 运行合适的 build、test、lint 或手动验证命令。
+9. 验证后更新任务清单：勾选已完成任务，并补充简短验证记录。
+10. 报告变更文件、验证结果、剩余风险和下一个未完成任务。
+
+## 任务更新契约
+
+- 只有在实现完成且验证已执行或明确无法执行时，才勾选任务。
+- 在任务下追加简短记录，例如：
+
+```markdown
+  - 验证记录：`npm test` 通过。
+```
+
+- 如果验证失败但代码已修改，不要勾选任务；记录失败命令和需要处理的问题。
+- 如果发现任务与 spec 不一致，记录偏差并建议运行 `validate-flow`。
+
+## 防护规则
+
+- 不跳过验证；命令无法运行时说明原因和残余风险。
+- 不扩大范围到相邻功能，除非当前任务无法独立工作。
+- 不在缺少 spec 或任务清单时直接编码；先使用 `generate-spec` 或 `generate-tasks`，或向用户确认绕过流程。
+- 不把“顺手重构”混入功能任务；必要重构必须服务于当前验收标准。
+- 完成报告要短，重点放在用户能继续推进的信息上。

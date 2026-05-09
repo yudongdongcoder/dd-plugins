@@ -1,4 +1,4 @@
 interface:
-  display_name: "Generate Tasks"
-  short_description: "Turn a spec into tracked tasks"
-  default_prompt: "Use $generate-tasks to split this feature spec into executable tasks."
+  display_name: "生成任务清单"
+  short_description: "把功能规格和实施计划拆成可执行任务清单用于逐步编码"
+  default_prompt: "使用 $generate-tasks，把这个功能规格拆成可执行任务清单。"

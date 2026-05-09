@@ -1,24 +1,32 @@
 ---
 name: generate-tasks
-description: Break a PRD-flow feature specification and optional implementation plan into a Chinese executable task checklist. Use when the user asks to create development tasks, dependency order, work packages, tracking checklists, testing steps, docs updates, or a docs/tasks feature task file from the feature spec and plan.
+description: 将 PRD-flow 的 feature spec 和可选实施计划拆成中文可执行任务清单 docs/tasks/{feature-id}-tasks.md。适用于用户要求生成开发任务、依赖顺序、工作包、复选框清单、测试步骤、文档更新、迁移步骤，或从功能规格和 plan 进入 implement-feature。
 ---
 
-# Generate Tasks
+# 生成任务清单
 
-Create an ordered implementation checklist for one feature. Default output: `docs/tasks/<feature-id>-tasks.md`.
+为一个功能创建按依赖排序的实现任务。默认产物：`docs/tasks/<feature-id>-tasks.md`。
 
-## Workflow
+## 语言与边界
 
-1. Identify the target `feature id`; ask only if it cannot be inferred.
-2. Read `docs/specs/<feature-id>.md`.
-3. Read `docs/tasks/<feature-id>-plan.md` if it exists; otherwise read `docs/PRD.md` as backup context.
-4. Split work into small, dependency-ordered tasks that one agent session can complete.
-5. Include implementation, tests, docs updates, migration/backfill steps, and verification commands when relevant.
-6. Create or update `docs/tasks/<feature-id>-tasks.md`.
+- 默认使用中文撰写；保留文件路径、命令、代码符号、接口名和 `feature id` 原文。
+- 任务要小到一个 agent session 可以完成并验证。
+- 不写产品新需求；发现 spec 或 plan 缺口时记录冲突或待确认项。
+- 默认只创建或更新任务文档，不修改业务代码。
 
-## Task Format
+## 工作流
 
-Use checkboxes and stable task IDs:
+1. 识别目标 `feature id`；无法从请求、spec 文件或 PRD 推断时再提问。
+2. 读取 `docs/specs/<feature-id>.md`。
+3. 如果存在 `docs/tasks/<feature-id>-plan.md`，读取它作为主要实施依据；否则读取 `docs/PRD.md` 补充背景。
+4. 将工作拆成依赖有序、可独立评审、可验收的任务。
+5. 覆盖实现、测试、文档、配置、迁移/回填、验证命令和发布前检查。
+6. 如果已有任务文件，保留已完成任务的 ID 和历史记录，除非用户要求重写。
+7. 创建或更新 `docs/tasks/<feature-id>-tasks.md`。
+
+## 任务格式
+
+使用复选框和稳定任务 ID：
 
 ```markdown
 - [ ] T01: 简短任务标题
@@ -30,10 +38,17 @@ Use checkboxes and stable task IDs:
   - 复杂度：S/M/L
 ```
 
-## Quality Bar
+## 拆解规则
 
-- Avoid vague tasks like “实现功能”.
-- Keep each task independently reviewable and testable.
-- Preserve dependency order.
-- Include acceptance criteria that let `implement-feature` know when to stop.
-- If the plan and spec disagree, note the conflict instead of hiding it.
+- `T01`、`T02` 等任务 ID 要稳定；更新已有清单时不要无故重排已引用的 ID。
+- 前置任务必须先出现，避免后续实现时需要跨任务跳跃。
+- 每个任务只能有一个主要目标；如果验收范围过宽，拆成多个任务。
+- 验证方式优先写实际命令，例如 `npm test`、`swift test`、`pod lib lint`；未知时写需要人工确认的验证路径。
+- 测试任务不要集中到最后，尽量跟随对应行为改动。
+
+## 质量标准
+
+- 避免“实现功能”“处理边界情况”这类不可验收任务。
+- 每个任务都要包含停止条件：完成到什么程度即可交给 `implement-feature`。
+- 如果 plan 和 spec 不一致，新增“冲突/待确认”任务或备注，不要静默选择一边。
+- 完成后说明任务数量、首个建议执行任务和任何阻塞问题。

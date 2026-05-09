@@ -1,4 +1,4 @@
 interface:
-  display_name: "Generate Spec"
-  short_description: "Expand a PRD feature into a spec"
-  default_prompt: "Use $generate-spec to create a feature spec from docs/PRD.md."
+  display_name: "生成功能规格"
+  short_description: "从 PRD 功能地图生成可实现的中文功能规格文档与验收标准"
+  default_prompt: "使用 $generate-spec，从 docs/PRD.md 为指定功能生成功能规格。"

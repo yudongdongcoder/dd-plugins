@@ -1,22 +1,30 @@
 ---
 name: plan-feature
-description: Create a Chinese implementation plan for one PRD-flow feature without modifying product code. Use when the user asks to analyze how to build a feature from docs/PRD.md and its docs/specs feature file, inspect existing code structure, identify integration points, dependencies, migrations, risks, phases, validation strategy, or write a docs/tasks feature plan before task breakdown or coding.
+description: 为单个 PRD-flow 功能生成中文代码感知实施计划 docs/tasks/{feature-id}-plan.md，且不修改业务代码。适用于用户要求根据 docs/PRD.md 和 docs/specs 分析如何实现、检查代码结构、识别集成点、依赖、迁移、风险、阶段、验证策略，或在拆任务和编码前写 implementation plan。
 ---
 
-# Plan Feature
+# 制定实施计划
 
-Create a code-aware implementation plan without changing business code. Default output: `docs/tasks/<feature-id>-plan.md`.
+创建代码感知但不改业务代码的实施计划。默认产物：`docs/tasks/<feature-id>-plan.md`。
 
-## Workflow
+## 语言与边界
 
-1. Identify the target `feature id`; ask only if it cannot be inferred.
-2. Read `docs/PRD.md` and `docs/specs/<feature-id>.md`.
-3. Inspect the existing codebase with fast search (`rg`, `rg --files`) and read relevant modules.
-4. Identify module boundaries, data flow, dependencies, integration points, migrations, compatibility risks, and testing surface.
-5. Split implementation into ordered phases with validation for each phase.
-6. Create or update `docs/tasks/<feature-id>-plan.md`.
+- 默认使用中文撰写；保留文件路径、命令、代码符号、接口名和 `feature id` 原文。
+- 只分析和写计划，不实现功能代码。
+- 计划要服务后续 `generate-tasks`，所以必须具体到可拆任务的模块、文件、命令和风险。
+- 如果现有代码结构不足以判断，写明假设和下一步最安全的检查方式。
 
-## Required Structure
+## 工作流
+
+1. 识别目标 `feature id`；无法从请求、PRD 或 spec 推断时再提问。
+2. 读取 `docs/PRD.md` 和 `docs/specs/<feature-id>.md`。
+3. 如果已有 `docs/tasks/<feature-id>-plan.md`，先读取并判断需要增量更新还是重写。
+4. 使用 `rg`、`rg --files` 或等价工具检查代码结构，阅读相关模块、测试和配置。
+5. 识别模块边界、数据流、依赖、集成点、迁移影响、兼容性风险和测试面。
+6. 拆成有顺序的实施阶段，并为每个阶段写验证方式。
+7. 创建或更新 `docs/tasks/<feature-id>-plan.md`。
+
+## 必需结构
 
 1. 目标与输入文档
 2. 现有代码结构观察
@@ -27,9 +35,17 @@ Create a code-aware implementation plan without changing business code. Default 
 7. 风险、取舍与回滚思路
 8. 后续任务拆解建议
 
-## Constraints
+## 计划契约
 
-- Do not implement feature code in this skill.
-- Do not modify business files; only create or update the plan document unless the user explicitly asks otherwise.
-- Keep the plan specific to files, modules, commands, and validation steps where discoverable.
-- If code structure is missing or ambiguous, state the assumption and propose the safest next check.
+- 现有代码观察要引用真实文件、模块或命令；不能只写抽象建议。
+- 每个阶段要说明目标、涉及区域、前置条件、验证方式和回滚思路。
+- 涉及数据迁移、配置、权限、安全或兼容性时必须单独列出。
+- 测试策略要覆盖单元、集成、端到端或人工验证中实际适合的部分。
+- 如果 spec 与代码现状冲突，记录冲突并给出最小可行处理建议。
+
+## 约束
+
+- 不修改业务文件；只创建或更新计划文档，除非用户明确要求扩大范围。
+- 不把任务清单写进计划；只给出后续拆解建议。
+- 不凭文件名猜架构；先查找再下结论。
+- 完成后说明读取了哪些关键输入、计划产物路径和主要风险。

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Orchestrate Feature"
-  short_description: "Choose the next PRD-flow step"
-  default_prompt: "Use $orchestrate-feature to decide and run the next PRD workflow step."
+  display_name: "编排 PRD Flow"
+  short_description: "根据现有文档判断并执行下一步 PRD Flow 工作流"
+  default_prompt: "使用 $orchestrate-feature，判断并执行当前项目下一步 PRD 工作流。"
