@@ -1,7 +1,7 @@
 {
   "name": "dd-modules",
   "version": "1.0.0",
-  "description": "实用开发模块集合，提供 podspec 格式化和 changelog 生成功能。",
+  "description": "实用开发模块集合，提供 podspec 整理、changelog 生成和 CocoaPods 发布流程。",
   "author": {
     "name": "dong"
   },
@@ -10,13 +10,14 @@
     "cocoapods",
     "podspec",
     "changelog",
-    "release-notes"
+    "release-notes",
+    "release"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "DD Modules",
-    "shortDescription": "Podspec 整理与更新日志生成",
-    "longDescription": "面向 iOS 模块维护的实用技能集合，支持清理 CocoaPods podspec 元数据，并根据 git 历史生成用户可读的中文更新日志。",
+    "shortDescription": "Podspec、更新日志与 CocoaPods 发布",
+    "longDescription": "面向 iOS 模块维护的实用技能集合，支持清理 CocoaPods podspec 元数据、根据 git 历史生成用户可读的中文更新日志，并按受控流程发布 CocoaPods 版本。",
     "developerName": "dong",
     "category": "Engineering",
     "capabilities": [
@@ -25,7 +26,8 @@
     ],
     "defaultPrompt": [
       "整理这个仓库里的 podspec 文件",
-      "根据提交历史生成中文更新日志"
+      "根据提交历史生成中文更新日志",
+      "使用 /cocoapods-release patch 发布当前 CocoaPods 项目版本"
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.png",

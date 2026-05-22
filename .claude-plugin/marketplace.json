@@ -7,7 +7,7 @@
     {
       "name": "dd-modules",
       "source": "./dd-modules",
-      "description": "实用开发模块集合，提供 podspec 格式化和 changelog 生成功能。"
+      "description": "实用开发模块集合，提供 podspec 整理、changelog 生成和 CocoaPods 发布流程。"
     },
     {
       "name": "dd-prd-flow",

@@ -12,7 +12,7 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，主要提供�
 | 插件 | 用途 | 主要能力 |
 | --- | --- | --- |
 | `dd-prd-flow` | PRD 驱动的需求到实现工作流 | 创建 PRD、生成功能规格、制定实施计划、拆解任务、校验文档一致性、按任务逐步实现 |
-| `dd-modules` | 实用开发模块集合 | 格式化 CocoaPods podspec、根据 git 历史生成中文更新日志 |
+| `dd-modules` | 实用开发模块集合 | 格式化 CocoaPods podspec、根据 git 历史生成中文更新日志、按受控流程发布 CocoaPods 版本 |
 
 ## 目录结构
 
@@ -38,7 +38,8 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，主要提供�
     ├── assets/
     └── skills/
         ├── podspec-formatter/
-        └── update-changelog/
+        ├── update-changelog/
+        └── cocoapods-release/
 ```
 
 ## `dd-prd-flow`
@@ -99,6 +100,7 @@ PRD -> feature spec -> implementation plan -> task checklist -> validation -> im
 | --- | --- |
 | `podspec-formatter` | 查找并整理仓库内 `.podspec` 文件，统一版本来源、homepage/source、license 和内部依赖声明 |
 | `update-changelog` | 根据 git commit 历史生成面向用户的中文更新日志、发布说明或 App Store 更新文案 |
+| `cocoapods-release` | 在明确调用后检查发布前提，更新版本与 changelog，创建 release commit/tag，并按 `PODSPEC` 顺序发布 podspec |
 
 ### 使用示例
 
@@ -108,6 +110,10 @@ PRD -> feature spec -> implementation plan -> task checklist -> validation -> im
 
 ```text
 根据最近一次 tag 到 HEAD 的提交生成中文更新日志
+```
+
+```text
+/cocoapods-release patch
 ```
 
 ## 安装与使用
