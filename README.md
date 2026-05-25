@@ -1,6 +1,6 @@
 # DD Plugins
 
-DD Plugins 是一组面向 AI coding agent 的本地插件集合，主要提供中文 PRD 驱动开发流程和 iOS 模块维护辅助能力。
+DD Plugins 是一组面向 AI coding agent 的本地插件集合，提供中文 PRD 驱动开发流程、iOS 模块维护辅助能力和飞书协作自动化工具。
 
 当前仓库同时维护 Codex 与 Claude 插件元数据：
 
@@ -13,6 +13,7 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，主要提供�
 | --- | --- | --- |
 | `dd-prd-flow` | PRD 驱动的需求到实现工作流 | 创建 PRD、生成功能规格、制定实施计划、拆解任务、校验文档一致性、按任务逐步实现 |
 | `dd-modules` | 实用开发模块集合 | 格式化 CocoaPods podspec、根据 git 历史生成中文更新日志、按受控流程发布 CocoaPods 版本 |
+| `lark` | 飞书 / Lark 协作工具集 | 通过 `lark-cli` 操作文档、消息、日历、任务、表格、会议及复合工作流 |
 
 ## 目录结构
 
@@ -32,14 +33,24 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，主要提供�
 │       ├── validate-flow/
 │       ├── implement-feature/
 │       └── orchestrate-feature/
-└── dd-modules/
+├── dd-modules/
+│   ├── .codex-plugin/plugin.json
+│   ├── .claude-plugin/plugin.json
+│   ├── assets/
+│   └── skills/
+│       ├── podspec-formatter/
+│       ├── update-changelog/
+│       └── cocoapods-release/
+└── lark/
     ├── .codex-plugin/plugin.json
     ├── .claude-plugin/plugin.json
-    ├── assets/
     └── skills/
-        ├── podspec-formatter/
-        ├── update-changelog/
-        └── cocoapods-release/
+        ├── lark-doc/
+        ├── lark-im/
+        ├── lark-calendar/
+        ├── lark-base/
+        ├── lark-task/
+        └── ...（共 26 个技能）
 ```
 
 ## `dd-prd-flow`
@@ -116,6 +127,35 @@ PRD -> feature spec -> implementation plan -> task checklist -> validation -> im
 /cocoapods-release patch
 ```
 
+## `lark`
+
+`lark` 基于 `lark-cli` 操作飞书资源，并通过共享认证、安全规则和复合工作流覆盖常见协作任务。使用具体飞书技能前，需要根据对应 `SKILL.md` 的要求先读取 `lark-shared` 及相关 reference 文档。
+
+### 技能说明
+
+| 能力域 | Skills |
+| --- | --- |
+| 文档与内容呈现 | `lark-doc`、`lark-markdown`、`lark-wiki`、`lark-drive`、`lark-slides`、`lark-whiteboard`、`lark-apps` |
+| 沟通、会议与日程 | `lark-im`、`lark-mail`、`lark-contact`、`lark-calendar`、`lark-vc`、`lark-vc-agent`、`lark-minutes` |
+| 数据与表格 | `lark-base`、`lark-sheets` |
+| 组织与协作管理 | `lark-approval`、`lark-attendance`、`lark-okr`、`lark-task` |
+| 平台与扩展 | `lark-shared`、`lark-event`、`lark-openapi-explorer`、`lark-skill-maker` |
+| 组合工作流 | `lark-workflow-meeting-summary`、`lark-workflow-standup-report` |
+
+### 使用示例
+
+```text
+汇总我今天的飞书日程和待办
+```
+
+```text
+读取并整理这份飞书文档
+```
+
+```text
+在飞书中创建会议并邀请参会人
+```
+
 ## 安装与使用
 
 本仓库以本地插件源形式组织。插件入口已经写入：
@@ -127,11 +167,13 @@ PRD -> feature spec -> implementation plan -> task checklist -> validation -> im
 
 - `dd-prd-flow`
 - `dd-modules`
+- `lark`
 
 也可以直接使用单个插件目录作为本地插件源：
 
 - `./dd-prd-flow`
 - `./dd-modules`
+- `./lark`
 
 ## 维护约定
 

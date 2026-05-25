@@ -13,6 +13,11 @@
       "name": "dd-prd-flow",
       "source": "./dd-prd-flow",
       "description": "PRD 驱动的需求到实现工作流，覆盖 PRD、规格、任务拆解与实现。"
+    },
+    {
+      "name": "lark",
+      "source": "./lark",
+      "description": "飞书 / Lark 协作工具集，基于 lark-cli 覆盖文档、消息、日历、任务、云空间、表格与会议工作流。"
     }
   ]
 }

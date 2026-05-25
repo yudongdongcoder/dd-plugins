@@ -1,0 +1,8 @@
+{
+  "name": "lark",
+  "description": "飞书 / Lark 协作工具集，基于 lark-cli 覆盖文档、消息、日历、任务、云空间、表格与会议工作流。",
+  "version": "1.0.0",
+  "author": {
+    "name": "dong"
+  }
+}
