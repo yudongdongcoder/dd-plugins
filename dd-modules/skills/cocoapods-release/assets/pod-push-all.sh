@@ -2,8 +2,12 @@
 set -euo pipefail
 
 REPO="${POD_REPO:-BoostApplePods}"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "${SCRIPT_DIR}/../../../.." && pwd)"
+if [[ -n "${POD_RELEASE_ROOT:-}" ]]; then
+  ROOT_DIR="$(cd "$POD_RELEASE_ROOT" && pwd)"
+elif ! ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  echo "Unable to determine repository root. Run this script from the CocoaPods project or set POD_RELEASE_ROOT." >&2
+  exit 1
+fi
 VERSION_FILE="${ROOT_DIR}/VERSION"
 PODSPEC_FILE="${ROOT_DIR}/PODSPEC"
 SCRIPT_VERSION='`scripts/version.sh`'

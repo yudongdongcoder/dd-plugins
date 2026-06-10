@@ -6,7 +6,7 @@ argument-hint: "<version|patch|minor|major>"
 
 # CocoaPods Release
 
-用于在当前仓库执行本地发布流程：更新 `VERSION`、由 AI 更新 `CHANGELOG.md`、创建 release commit、创建并推送 Git tag，然后直接运行本 Skill 内置的 `assets/pod-push-all.sh`，按根目录 `PODSPEC` 文件列出的顺序发布 podspec。默认发布到 `BoostApplePods`，如需其它私有 specs repo，可在执行脚本时使用 `POD_REPO=<repo-name>` 覆盖。
+用于在当前仓库执行本地发布流程：更新 `VERSION`、由 AI 更新 `CHANGELOG.md`、创建 release commit、创建并推送 Git tag，然后从目标 CocoaPods 项目根目录直接运行本 Skill 内置的 `assets/pod-push-all.sh`，按根目录 `PODSPEC` 文件列出的顺序发布 podspec。默认发布到 `BoostApplePods`，如需其它私有 specs repo，可在执行脚本时使用 `POD_REPO=<repo-name>` 覆盖。
 
 ## 触发条件
 
@@ -72,7 +72,7 @@ VPNNetworkiOS
 
 10. 检查 `PODSPEC` 中列出的 podspec 的 source tag 使用 `:tag => s.version`。
 11. 检查 `scripts/version.sh` 存在。
-12. 检查本 Skill 内置脚本 `.claude/skills/cocoapods-release/assets/pod-push-all.sh` 存在且可执行；如果不存在或不可执行，停止发布并提示用户处理，不要在只读检查阶段自动修改权限。
+12. 检查本 Skill 目录下的 `assets/pod-push-all.sh` 存在且可执行；不要硬编码 `.claude/skills` 或 `.codex/skills` 安装路径。执行脚本时必须以目标 CocoaPods 项目为当前工作目录；如果无法从该目录执行，可设置 `POD_RELEASE_ROOT=<repo-root>`。如果脚本不存在或不可执行，停止发布并提示用户处理，不要在只读检查阶段自动修改权限。
 
 如果任一检查失败，停止发布并向用户说明原因。
 
@@ -87,7 +87,7 @@ VPNNetworkiOS
 3. 创建 release commit
 4. 创建 tag <target-version>
 5. push commit 和 tag 到 origin
-6. 直接执行 .claude/skills/cocoapods-release/assets/pod-push-all.sh 发布 PODSPEC 中列出的 <podspec-count> 个 podspec（脚本会使用 --allow-warnings、--skip-import-validation、--skip-tests、--use-modular-headers）：
+6. 从目标 CocoaPods 项目根目录直接执行本 Skill 目录下的 assets/pod-push-all.sh 发布 PODSPEC 中列出的 <podspec-count> 个 podspec（脚本会使用 --allow-warnings、--skip-import-validation、--skip-tests、--use-modular-headers）：
    1. <podspec-name>.podspec
    2. <podspec-name>.podspec
 
@@ -143,7 +143,7 @@ release commit 已创建。
 1. git tag -a <target-version> -m "Release <target-version>"
 2. git push origin HEAD
 3. git push origin <target-version>
-4. .claude/skills/cocoapods-release/assets/pod-push-all.sh <target-version>
+4. <skill-dir>/assets/pod-push-all.sh <target-version>
 
 确认后会发布到远端 Git 仓库和 configured pod repo；这些远端副作用不会自动回滚。
 是否继续？
@@ -159,18 +159,18 @@ release commit 已创建。
 git tag -a <target-version> -m "Release <target-version>"
 git push origin HEAD
 git push origin <target-version>
-.claude/skills/cocoapods-release/assets/pod-push-all.sh <target-version>
+<skill-dir>/assets/pod-push-all.sh <target-version>
 ```
 
 如果需要发布到非默认 specs repo，最后一步改为：
 
 ```bash
-POD_REPO=<repo-name> .claude/skills/cocoapods-release/assets/pod-push-all.sh <target-version>
+POD_REPO=<repo-name> <skill-dir>/assets/pod-push-all.sh <target-version>
 ```
 
 ## 脚本失败处理
 
-如果 `.claude/skills/cocoapods-release/assets/pod-push-all.sh` 运行失败：
+如果 `<skill-dir>/assets/pod-push-all.sh` 运行失败：
 
 1. 停止流程，不要自动重试 `pod repo push`，不要尝试修改代码、修改 podspec、调整脚本、重排 `PODSPEC`、补发依赖、删除 tag、重新 tag、force push 或执行其它修复动作。
 2. 直接向用户报告失败的 podspec、关键错误信息、已经完成的远端副作用（例如 release commit/tag 是否已 push、哪些 podspec 从输出看已成功 push）。
