@@ -2,10 +2,13 @@
 
 DD Plugins 是一组面向 AI coding agent 的本地插件集合，提供项目 AI 规范诊断、中文 PRD 驱动开发流程和 iOS 模块维护辅助能力。
 
-当前仓库同时维护 Codex 与 Claude 插件元数据：
+当前仓库同时维护三端元数据：
 
-- Codex：`.agents/plugins/marketplace.json`、各插件的 `.codex-plugin/plugin.json`
+- Codex：`.agents/plugins/marketplace.json`、各插件的 `.codex-plugin/plugin.json`、各 skill 的 `agents/openai.yaml`
 - Claude：`.claude-plugin/marketplace.json`、各插件的 `.claude-plugin/plugin.json`
+- Pi：无独立清单，按 skill 目录用 `--skill <绝对路径>` 加载
+
+在本仓库开发 skill 的约定见 [AGENTS.md](AGENTS.md)（`CLAUDE.md` 通过 `@AGENTS.md` 导入同一份内容）。
 
 ## 插件列表
 
@@ -19,36 +22,37 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，提供项目 
 
 ```text
 .
+├── AGENTS.md                             # 本仓库的开发约定（三端公用）
+├── CLAUDE.md                             # 仅一行 @AGENTS.md
+├── scripts/check-plugins.sh              # 三端元数据一致性校验
+├── scripts/gen-assets.py                 # 生成各插件 icon.png / logo.png
 ├── .agents/plugins/marketplace.json      # Codex 本地插件市场入口
 ├── .claude-plugin/marketplace.json       # Claude 本地插件市场入口
 ├── dd-prd-flow/
 │   ├── .codex-plugin/plugin.json
 │   ├── .claude-plugin/plugin.json
 │   ├── assets/
-│   └── skills/
-│       ├── create-prd/
-│       ├── generate-spec/
-│       ├── plan-feature/
-│       ├── generate-tasks/
-│       ├── validate-flow/
-│       ├── implement-feature/
-│       └── orchestrate-feature/
+│   └── skills/<skill-name>/
+│       ├── SKILL.md
+│       └── agents/openai.yaml            # Codex 展示元数据
 ├── dd-modules/
 │   ├── .codex-plugin/plugin.json
 │   ├── .claude-plugin/plugin.json
 │   ├── assets/
-│   └── skills/
-│       ├── podspec-formatter/
-│       ├── update-changelog/
-│       └── cocoapods-release/
+│   └── skills/<skill-name>/
+│       ├── SKILL.md
+│       └── agents/openai.yaml
 └── dd-agent/
     ├── .codex-plugin/plugin.json
     ├── .claude-plugin/plugin.json
-    └── skills/
-        └── agent-doctor/
-            ├── SKILL.md
-            └── references/
+    ├── assets/
+    └── skills/agent-doctor/
+        ├── SKILL.md
+        ├── agents/openai.yaml
+        └── references/
 ```
+
+`dd-prd-flow` 的 skill 为 `create-prd`、`generate-spec`、`plan-feature`、`generate-tasks`、`validate-flow`、`implement-feature`、`orchestrate-feature`；`dd-modules` 的 skill 为 `podspec-formatter`、`update-changelog`、`cocoapods-release`。
 
 ## `dd-prd-flow`
 
@@ -166,21 +170,31 @@ Codex 和 Claude 可通过独立的 `dd-agent` 插件发现该 skill。Pi 可在
 - Codex 市场入口 `.agents/plugins/marketplace.json`
 - Claude 市场入口 `.claude-plugin/marketplace.json`
 - 对应 `skills/<skill-name>/SKILL.md`
-- 如有展示资源，更新 `assets/icon.png` 和 `assets/logo.png`
+- 对应 `skills/<skill-name>/agents/openai.yaml`
+- 展示资源 `assets/icon.png` 和 `assets/logo.png` 由 `python3 scripts/gen-assets.py` 生成，不手工编辑
 
 新增 skill 时，建议保持以下约定：
 
-- `SKILL.md` 顶部包含 `name` 和 `description`
+- `SKILL.md` 顶部包含 `name`（等于目录名）和 `description`
+- `agents/openai.yaml` 提供 Codex 的 `display_name`、`short_description`、`default_prompt`
 - 明确适用场景、输入、输出、工作流和质量标准
 - 默认中文沟通，代码符号、路径、命令和第三方名称保留原文
 - 产物路径稳定，便于后续 skill 串联
 
+完整约定见 [AGENTS.md](AGENTS.md)。
+
 ## 发布检查
 
-发布前建议确认：
+发布前先运行校验脚本：
 
-- 插件名称、版本号、描述在 Codex 与 Claude 元数据中一致
-- marketplace 中的插件路径指向真实目录
+```bash
+./scripts/check-plugins.sh
+```
+
+它自动检查：JSON 合法性、两端市场插件列表一致、市场路径真实存在、插件目录已被两端收录、`plugin.json` 的 `name`/`version`/`description` 两端一致、`interface` 引用的资源文件存在、每个 `SKILL.md` 的 frontmatter `name` 与目录名匹配、每个 skill 都有 `agents/openai.yaml`。有失败项时退出码为 1。
+
+脚本覆盖不到、仍需人工确认的部分：
+
 - 所有 `SKILL.md` 可以独立说明触发场景和边界
-- 资源文件存在，路径与 plugin manifest 一致
+- 版本号已按改动幅度递增
 - `git status` 中没有无关临时文件或系统文件

@@ -19,7 +19,11 @@
     "defaultPrompt": [
       "使用 agent-doctor 检查并修复当前项目的 AI 规范",
       "只检查当前项目的 skill 目录与链接，不修改文件"
-    ]
+    ],
+    "brandColor": "#7C3AED",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
   },
   "keywords": [
     "agents",

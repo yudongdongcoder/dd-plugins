@@ -1,0 +1,4 @@
+interface:
+  display_name: "DD Podspec Formatter"
+  short_description: "Find and 统一 podspec 元数据、版本来源与内部依赖声明"
+  default_prompt: "使用 $podspec-formatter，整理这个仓库里的 podspec 文件。"

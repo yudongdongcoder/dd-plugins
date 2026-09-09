@@ -1,0 +1,4 @@
+interface:
+  display_name: "DD Agent Doctor"
+  short_description: "Diagnose and fix 项目 AI 指引与 skill 目录规范 across Claude、Codex、Pi"
+  default_prompt: "使用 $agent-doctor，检查并修复当前项目的 AI 规范。"

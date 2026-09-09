@@ -1,0 +1,4 @@
+interface:
+  display_name: "DD Update Changelog"
+  short_description: "Turn git 提交历史 into 用户可读的中文更新日志"
+  default_prompt: "使用 $update-changelog，根据最近一次 tag 到 HEAD 的提交生成中文更新日志。"

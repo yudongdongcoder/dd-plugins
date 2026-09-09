@@ -1,0 +1,4 @@
+interface:
+  display_name: "DD CocoaPods Release"
+  short_description: "Run 受控发布流程：版本、changelog、release tag 与 pod repo push"
+  default_prompt: "使用 $cocoapods-release，发布当前 CocoaPods 项目的 patch 版本。"
