@@ -4,5 +4,13 @@
   "description": "诊断并修复 Claude Code、Codex 和 Pi 的项目指引与 skill 目录规范。",
   "author": {
     "name": "dong"
-  }
+  },
+  "keywords": [
+    "agents",
+    "skills",
+    "claude",
+    "codex",
+    "pi",
+    "project-setup"
+  ]
 }

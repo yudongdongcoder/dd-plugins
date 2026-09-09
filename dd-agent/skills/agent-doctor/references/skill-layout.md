@@ -47,6 +47,76 @@ project/
 
 没有任何项目 skill 时无需创建空目录或示例 skill，记录“暂无项目 skills”，在项目指引中写明后续新增规范即可。
 
+## 参考命令
+
+以下命令已在含正常实体、断链、外部链接、缺 `SKILL.md` 和根级散文件的目录上验证过。执行前确认当前目录是目标项目根，并按实际 skill 名替换 `<name>`。
+
+**盘点**：用 `lstat`/`readlink` 语义，断链、指向项目外和不会被识别的条目都能看到。
+
+```bash
+python3 - <<'PY'
+import os, pathlib
+root = pathlib.Path.cwd()
+for base in (".agents/skills", ".claude/skills", ".pi/skills"):
+    b = root / base
+    if not b.is_symlink() and not b.exists():
+        continue
+    print(f"\n# {base}" + (f"  [容器本身是链接 -> {os.readlink(b)}]" if b.is_symlink() else ""))
+    if not b.is_dir():
+        continue
+    for q in sorted(b.iterdir()):
+        if q.is_symlink():
+            tgt = os.readlink(q)
+            real = pathlib.Path(os.path.normpath(q.parent / tgt))
+            if not q.exists():
+                state = "断链"
+            elif root != real and root not in real.parents:
+                state = "指向项目外"
+            elif not (real / "SKILL.md").is_file():
+                state = "缺 SKILL.md"
+            else:
+                state = "ok"
+            print(f"  {q.name:<20} 链接 -> {tgt:<38} {state}")
+        elif q.is_dir():
+            n = sum(1 for x in q.rglob("*") if x.is_file())
+            print(f"  {q.name:<20} 实体   {n} 个文件" + ("" if (q / "SKILL.md").is_file() else "，缺 SKILL.md"))
+        else:
+            print(f"  {q.name:<20} 普通文件，不会被识别为 skill")
+PY
+```
+
+**迁移实体**：同一文件系统内用重命名保留权限；目标已存在时一律不覆盖，回到现状表逐项比较。
+
+```bash
+name=<name>
+if [ -e ".agents/skills/$name" ]; then
+  echo "目标已存在，先比较两份完整目录"
+else
+  mkdir -p .agents/skills && mv ".pi/skills/$name" ".agents/skills/$name"
+fi
+```
+
+**建立 Claude 入口**：`-e` 对断链返回假，必须同时判断 `-L`，否则会把断链当成缺失入口重建。不要用 `ln -sf` 覆盖未知内容。
+
+```bash
+name=<name>
+mkdir -p .claude/skills
+if [ -e ".claude/skills/$name" ] || [ -L ".claude/skills/$name" ]; then
+  echo "入口已存在（可能是断链或错误目标），按现状表判断"
+else
+  ln -s "../../.agents/skills/$name" ".claude/skills/$name"
+fi
+```
+
+**备份**：仅在合并、修改或移除重复实体前执行，放在不参与 skill 发现的位置。
+
+```bash
+stamp=$(date +%Y%m%d-%H%M%S)
+mkdir -p ".agents/doctor-backups/$stamp"
+cp -R ".claude/skills/<name>" ".agents/doctor-backups/$stamp/claude-<name>"
+```
+
+
 ## Pi 与发现范围
 
 当前 Pi 原生发现项目 `.agents/skills`，所以缺少 `.pi/skills` 是合规状态。原 `.pi/skills` 实体迁出后，若没有被其他文件引用且当前版本确认不需要它，移除空的旧入口即可；有引用或需兼容的入口保留相对符号链接，不保留重复实体。
@@ -61,6 +131,6 @@ monorepo 中逐个作用域规范化，普通项目 `.agents/skills` 不能保�
 
 - Codex 扫描当前目录至仓库根目录间的 `.agents/skills`，支持 skill 文件夹链接；同名 skill 不自动合并。[Codex 官方说明](https://learn.chatgpt.com/docs/build-skills)
 - Claude 项目入口是 `.claude/skills/<name>/SKILL.md`，支持将 `<name>` 作为目录符号链接。[Claude 官方说明](https://code.claude.com/docs/en/skills#where-skills-live)
-- Pi 支持 `.pi/skills` 与当前及祖先目录中的 `.agents/skills`，项目 skills 受项目信任与发现开关影响。[Pi 官方说明](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/skills.md#locations)
+- Pi 支持 `.pi/skills` 与当前及祖先目录中的 `.agents/skills`，向上查找到 git 仓库根为止（不在仓库内时到文件系统根）；项目 skills 需要项目已被信任，并受 `--no-skills` 影响。[Pi 官方说明](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/skills.md#locations)
 
 核对日期：2026-09-09；本机 Pi 0.85.1 文档也确认 `.agents/skills` 支持。不要把该版本号固定成使用此 skill 的最低版本。

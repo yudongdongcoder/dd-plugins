@@ -24,7 +24,7 @@
 ## Pi
 
 - 指 pi-mono 的 coding agent（目前 npm 包名为 `@earendil-works/pi-coding-agent`）。它在启动时从全局、祖先目录和当前目录读取项目上下文，支持 `AGENTS.md` 或 `CLAUDE.md`。
-- 当前版本支持同目录 `AGENTS.override.md` 替代普通上下文文件；存在覆盖文件时先核实实际加载结果。
+- 当前版本支持同目录 `AGENTS.override.md` 替代该目录的 `AGENTS.md` 或 `CLAUDE.md`；覆盖只作用于所在目录，其他目录的上下文文件仍会拼接进来。存在覆盖文件时先核实实际加载结果。
 - 默认使用根目录 `AGENTS.md` 即可，不依赖 Pi 解析 Claude 的 `@` 导入。
 - `.pi/SYSTEM.md` 会替换默认系统提示，不是普通项目指引初始化所需的文件。`--no-context-files` 会禁用上下文文件发现。
 - 不假定从仓库根目录启动后，会自动发现后续访问的所有子目录上下文。可在新会话启动信息中检查已加载的项目指引。
