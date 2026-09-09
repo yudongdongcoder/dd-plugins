@@ -1,0 +1,32 @@
+{
+  "name": "dd-agent",
+  "version": "0.1.0",
+  "description": "诊断并修复 Claude Code、Codex 和 Pi 的项目指引与 skill 目录规范。",
+  "author": {
+    "name": "dong"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DD Agent",
+    "shortDescription": "统一项目 AI 指引与 Skill 目录",
+    "longDescription": "初始化或合并 AGENTS.md 与 CLAUDE.md，将项目 skill 实体统一到 .agents/skills，为 Claude 创建相对链接，并检查 Pi 发现路径、重复内容和断链。",
+    "developerName": "dong",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "使用 agent-doctor 检查并修复当前项目的 AI 规范",
+      "只检查当前项目的 skill 目录与链接，不修改文件"
+    ]
+  },
+  "keywords": [
+    "agents",
+    "skills",
+    "claude",
+    "codex",
+    "pi",
+    "project-setup"
+  ]
+}
