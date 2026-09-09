@@ -12,7 +12,7 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，提供中文 
 | 插件 | 用途 | 主要能力 |
 | --- | --- | --- |
 | `dd-prd-flow` | PRD 驱动的需求到实现工作流 | 创建 PRD、生成功能规格、制定实施计划、拆解任务、校验文档一致性、按任务逐步实现 |
-| `dd-modules` | 实用开发模块集合 | 格式化 CocoaPods podspec、根据 git 历史生成中文更新日志、按受控流程发布 CocoaPods 版本 |
+| `dd-modules` | 实用开发模块集合 | 诊断并修复跨 agent 项目规范、格式化 CocoaPods podspec、生成中文更新日志、发布 CocoaPods 版本 |
 | `lark` | 飞书 / Lark 协作工具集 | 通过 `lark-cli` 操作文档、消息、日历、任务、表格、会议及复合工作流 |
 
 ## 目录结构
@@ -38,6 +38,7 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，提供中文 
 │   ├── .claude-plugin/plugin.json
 │   ├── assets/
 │   └── skills/
+│       ├── agent-doctor/
 │       ├── podspec-formatter/
 │       ├── update-changelog/
 │       └── cocoapods-release/
@@ -103,17 +104,26 @@ PRD -> feature spec -> implementation plan -> task checklist -> validation -> im
 
 ## `dd-modules`
 
-`dd-modules` 面向 iOS 模块维护，处理常见发布和元数据整理工作。
+`dd-modules` 提供跨 agent 项目规范诊断、修复与初始化，以及 iOS 模块维护、发布和元数据整理能力。
 
 ### 技能说明
 
 | Skill | 适用场景 |
 | --- | --- |
+| `agent-doctor` | 初始化或修复 `AGENTS.md`/`CLAUDE.md`，统一 `.agents/skills` 实体与 Claude 链接，处理重复目录、断链及 Pi 发现路径 |
 | `podspec-formatter` | 查找并整理仓库内 `.podspec` 文件，统一版本来源、homepage/source、license 和内部依赖声明 |
 | `update-changelog` | 根据 git commit 历史生成面向用户的中文更新日志、发布说明或 App Store 更新文案 |
 | `cocoapods-release` | 在明确调用后检查发布前提，更新版本与 changelog，创建 release commit/tag，并按 `PODSPEC` 顺序发布 podspec |
 
 ### 使用示例
+
+```text
+使用 agent-doctor 检查并修复当前项目的 AI 规范，统一 Claude、Codex 和 Pi 的项目指引与 skill 目录
+```
+
+`agent-doctor` 默认诊断并修复不符合规范的项目，也支持明确要求“只检查”。公共指引保存在 `AGENTS.md`，由 `CLAUDE.md` 导入；项目 skill 完整实体统一到 `.agents/skills/<name>/`，`.claude/skills/<name>` 使用相对符号链接。当前 Pi 直接读取 `.agents/skills`，无需额外镜像。迁移保留资源和人工内容，无法确定的同名冲突单独报告。完整说明见 [SKILL.md](dd-modules/skills/agent-doctor/SKILL.md)。
+
+Codex 和 Claude 可通过 `dd-modules` 插件发现该 skill。Pi 可在目标项目目录启动时使用 `--skill /本仓库绝对路径/dd-modules/skills/agent-doctor` 加载，然后调用 `/skill:agent-doctor`；此处的路径需替换为本机实际路径。
 
 ```text
 整理这个仓库里的 podspec 文件
