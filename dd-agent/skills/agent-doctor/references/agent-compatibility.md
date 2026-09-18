@@ -1,6 +1,6 @@
 # Agent 项目指引兼容性
 
-核对日期：2026-09-09。以下用于选择项目文件布局，不是要求修改客户端配置；特定版本与这里不符时，以安装版本的文档或源码为准。
+核对日期：Codex、Claude Code、Pi 为 2026-09-09，WorkBuddy 为 2026-09-18。以下用于选择项目文件布局，不是要求修改客户端配置；特定版本与这里不符时，以安装版本的文档或源码为准。
 
 ## Codex
 
@@ -31,8 +31,24 @@
 
 来源：[Pi 官方 README：Context Files](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/README.md#context-files)。
 
+## WorkBuddy / CodeBuddy Code
+
+- WorkBuddy 桌面端以内置的 CodeBuddy Code CLI 作为运行时，两者共用同一套项目发现规则。差别只在用户级配置目录：桌面端给 CLI 传 `CODEBUDDY_CONFIG_DIR=~/.workbuddy`，单独安装的 CLI 默认 `~/.codebuddy`。项目级配置目录两种情况下都是 `<工作目录>/.codebuddy`。
+- 项目主指引按 `CODEBUDDY.md`、`CODEBUDDY.mdc`、`AGENTS.md`、`AGENTS.mdc` 的顺序取**首个命中**，同一目录只加载一份，随后用同样顺序再看该目录下的 `.codebuddy/`。因此只维护 `AGENTS.md` 就能被读取；新增 `CODEBUDDY.md` 会让同目录 `AGENTS.md` 不再加载。
+- 主指引沿从文件系统根到工作目录的每一层目录各取一份，不在仓库根停止。工作目录上方的个人目录若有 `AGENTS.md`，同样会进入上下文；判断实际生效内容时要看整条路径，而不只是仓库根。
+- `CODEBUDDY.local.md` 是工作目录的个人本地文件。`<工作目录>/.codebuddy/rules/` 下的 `.md` 和 `.mdc` 递归加载（跟随符号链接），frontmatter 的 `paths:` 限定生效文件范围，`alwaysApply` 控制是否无条件注入。
+- 正文支持 `@路径` 导入，语义与 Claude Code 一致：相对路径按当前文件所在目录解析，也接受 `~/` 和绝对路径，代码块内的 `@` 不展开，导入深度上限 5。
+- 单个指引或规则文件超过 40000 字符会被整份丢弃，不是截断；拆分文件或改用 `@` 导入。
+- 桌面端在会话首轮还会额外注入一段 `project_context`：只取首个命中的主指引文件原文，在 8000 字符处截断，并且**不展开** `@` 导入。所以把公共正文全部藏在 `CODEBUDDY.md` 的一行导入后面时，CLI 能读到而桌面端首轮读不到。
+- Skill 只从 `<工作目录>/.codebuddy/skills/` 和用户级 `<配置目录>/skills/` 发现，不扫描 `.agents/skills` 或 `.claude/skills`。
+- `.codebuddy/settings*.json`、`.codebuddy/rules/`、`.codebuddy/agents/`、`.codebuddy/commands/`、`CODEBUDDY.md` 在该端属于“agent 自身配置”，在 WorkBuddy 或 CodeBuddy Code 会话里修改会被判定为自我修改并要求确认。
+
+来源：WorkBuddy 5.5.6 应用包内 `workbuddy-server` 的 project-context、project-config 实现，以及内置 agent-cli（`@tencent-ai/codebuddy-code` 2.137.1）的 memory loader 与 skill provider 实现。核对方式是读打包代码，未在客户端实际加载验证。
+
 ## 局部规则的跨 agent 布局
 
 有必要新增 `packages/mobile/AGENTS.md` 时，可同时创建 `packages/mobile/CLAUDE.md` 导入同目录 `@AGENTS.md`。在根 `AGENTS.md` 中明确写出：修改 `packages/mobile/` 前，读取 `packages/mobile/AGENTS.md`。
 
 这样既有客户端可发现的局部入口，也有从根目录开始工作的明确阅读指引。局部文件只写该范围的差异，不复制根规则；仍应说明实际客户端加载尚未验证。
+
+WorkBuddy 只在工作目录位于该子目录内时才会读到它的 `packages/mobile/AGENTS.md`，从仓库根启动的会话不会自动加载；根 `AGENTS.md` 里的按需读取提示对它同样必要。

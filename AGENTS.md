@@ -10,7 +10,7 @@ DD Plugins 是一个 **skill 分发仓库**，不含应用代码，产物全部�
 | --- | --- |
 | `dd-prd-flow` | PRD 驱动的需求到实现工作流（7 个 skill） |
 | `dd-modules` | iOS 模块维护：podspec、changelog、CocoaPods 发布（3 个 skill） |
-| `dd-agent` | 跨 agent 项目规范诊断与修复（1 个 skill） |
+| `dd-agent` | 跨 agent 项目规范诊断与修复（1 个 skill），覆盖 Claude Code、Codex、Pi、WorkBuddy |
 
 ## 三端布局
 
@@ -21,6 +21,8 @@ DD Plugins 是一个 **skill 分发仓库**，不含应用代码，产物全部�
 | Pi | 无独立入口 | 无独立清单 | 无 | 启动时 `--skill <本仓库绝对路径>/<plugin>/skills/<name>` |
 
 Pi 当前没有插件市场概念，只能按 skill 目录逐个加载，加载后用 `/skill:<name>` 调用。不要为 Pi 新增 `.pi/` 镜像目录或第三套清单——它读 `AGENTS.md` 和 `.agents/skills`，与本仓库的分发结构无关。
+
+WorkBuddy 不是本仓库的分发端，本仓库不维护它的清单。要在 WorkBuddy 里用某个 skill，把 `<plugin>/skills/<name>` 符号链接到用户级 `~/.workbuddy/skills/<name>`；不要新增 `.codebuddy/` 镜像目录或第四套清单。它作为 `dd-agent/agent-doctor` 的**目标端**出现，那是被诊断项目的布局，与这里的分发结构无关。
 
 ## 边界：分发用 skill 不是项目 skill
 
@@ -76,4 +78,4 @@ python3 scripts/gen-assets.py /tmp/out # 只预览，不覆盖
 
 ## 已知缺口
 
-- `dd-agent` 版本为 `0.1.0`，另外两个插件为 `1.0.0`。
+- `dd-agent` 版本为 `0.2.0`，另外两个插件为 `1.0.0`。

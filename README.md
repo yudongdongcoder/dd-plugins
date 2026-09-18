@@ -16,7 +16,7 @@ DD Plugins 是一组面向 AI coding agent 的本地插件集合，提供项目 
 | --- | --- | --- |
 | `dd-prd-flow` | PRD 驱动的需求到实现工作流 | 创建 PRD、生成功能规格、制定实施计划、拆解任务、校验文档一致性、按任务逐步实现 |
 | `dd-modules` | 实用开发模块集合 | 格式化 CocoaPods podspec、生成中文更新日志、发布 CocoaPods 版本 |
-| `dd-agent` | 跨 agent 项目规范诊断与修复 | 初始化项目指引、统一 skill 实体目录、修复链接与重复内容 |
+| `dd-agent` | 跨 agent 项目规范诊断与修复 | 初始化项目指引、统一 skill 实体目录、修复 Claude 与 WorkBuddy 入口链接、排查重复内容 |
 
 ## 目录结构
 
@@ -130,17 +130,17 @@ PRD -> feature spec -> implementation plan -> task checklist -> validation -> im
 
 ## `dd-agent`
 
-`dd-agent` 是独立插件，包含 `agent-doctor` skill，面向 Claude Code、Codex 和 Pi 项目的 AI 指引与 skill 规范管理。
+`dd-agent` 是独立插件，包含 `agent-doctor` skill，面向 Claude Code、Codex、Pi 和 WorkBuddy 项目的 AI 指引与 skill 规范管理。
 
 ### 使用示例
 
 ```text
-使用 agent-doctor 检查并修复当前项目的 AI 规范，统一 Claude、Codex 和 Pi 的项目指引与 skill 目录
+使用 agent-doctor 检查并修复当前项目的 AI 规范，统一 Claude、Codex、Pi 和 WorkBuddy 的项目指引与 skill 目录
 ```
 
-`agent-doctor` 默认诊断并修复不符合规范的项目，也支持明确要求“只检查”。公共指引保存在 `AGENTS.md`，由 `CLAUDE.md` 导入；项目 skill 完整实体统一到 `.agents/skills/<name>/`，`.claude/skills/<name>` 使用相对符号链接。当前 Pi 直接读取 `.agents/skills`，无需额外镜像。迁移保留资源和人工内容，无法确定的同名冲突单独报告。完整说明见 [SKILL.md](dd-agent/skills/agent-doctor/SKILL.md)。
+`agent-doctor` 默认诊断并修复不符合规范的项目，也支持明确要求“只检查”。公共指引保存在 `AGENTS.md`，由 `CLAUDE.md` 导入；项目 skill 完整实体统一到 `.agents/skills/<name>/`，`.claude/skills/<name>` 和 `.codebuddy/skills/<name>` 使用相对符号链接。当前 Pi 直接读取 `.agents/skills`，无需额外镜像；WorkBuddy 只认 `.codebuddy/skills`，也会读根目录 `AGENTS.md`，不新增 `CODEBUDDY.md`。迁移保留资源和人工内容，无法确定的同名冲突单独报告。完整说明见 [SKILL.md](dd-agent/skills/agent-doctor/SKILL.md)。
 
-Codex 和 Claude 可通过独立的 `dd-agent` 插件发现该 skill。Pi 可在目标项目目录启动时使用 `--skill /本仓库绝对路径/dd-agent/skills/agent-doctor` 加载，然后调用 `/skill:agent-doctor`；此处的路径需替换为本机实际路径。
+Codex 和 Claude 可通过独立的 `dd-agent` 插件发现该 skill。Pi 可在目标项目目录启动时使用 `--skill /本仓库绝对路径/dd-agent/skills/agent-doctor` 加载，然后调用 `/skill:agent-doctor`；此处的路径需替换为本机实际路径。WorkBuddy 没有本仓库的市场入口，可把 `dd-agent/skills/agent-doctor` 以符号链接放到用户级 skill 目录 `~/.workbuddy/skills/agent-doctor`。
 
 ## 安装与使用
 
