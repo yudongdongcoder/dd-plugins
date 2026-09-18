@@ -16,12 +16,13 @@ AGENTS.md   # 公共项目事实、工作方式与验证入口，供 Codex、Pi 
 CLAUDE.md   # 使用 @AGENTS.md 导入公共指引，可保留 Claude 专属补充
 .agents/skills/<name>/        # skill 的唯一真实目录，包含 SKILL.md 和配套资源
 .claude/skills/<name>         # 相对符号链接 -> ../../.agents/skills/<name>
-.codebuddy/skills/<name>      # 相对符号链接 -> ../../.agents/skills/<name>，项目有 skill 时才建
+.codebuddy/skills/<name>      # 相对符号链接 -> ../../.agents/skills/<name>，WorkBuddy 运行时入口，项目有 skill 时才建
+.workbuddy/skills/<name>      # 相对符号链接 -> ../../.agents/skills/<name>，WorkBuddy 设置页列表，同上
 ```
 
 Pi 默认指 pi-mono 的 coding agent。当前版本直接读取 `AGENTS.md` 和 `.agents/skills`，默认不新增 `.pi/skills` 镜像。只有目标版本确需兼容入口或用户明确要求时，才建立 `.pi/skills/<name>` 相对链接。指引正文与 skill 实体都只维护一份；不生成 `PI.md` 或替换系统提示。
 
-WorkBuddy 指腾讯 WorkBuddy 桌面端及其内置的 CodeBuddy Code CLI，同一套发现规则也适用于单独安装的 CodeBuddy Code。它按 `CODEBUDDY.md`、`AGENTS.md` 的顺序取首个命中的项目指引，所以默认布局的 `AGENTS.md` 已经生效，不新增 `CODEBUDDY.md`；项目已有 `CODEBUDDY.md` 时按“已有文件处理”判断。它不扫描 `.agents/skills` 和 `.claude/skills`，项目 skill 入口是 `.codebuddy/skills/<name>` 相对链接；用户级 skill 在 `~/.workbuddy/skills`，不属于项目范围。
+WorkBuddy 指腾讯 WorkBuddy 桌面端及其内置的 CodeBuddy Code CLI，同一套发现规则也适用于单独安装的 CodeBuddy Code。它按 `CODEBUDDY.md`、`AGENTS.md` 的顺序取首个命中的项目指引，所以默认布局的 `AGENTS.md` 已经生效，不新增 `CODEBUDDY.md`；项目已有 `CODEBUDDY.md` 时按“已有文件处理”判断。它不扫描 `.agents/skills` 和 `.claude/skills`，项目 skill 入口是 `.codebuddy/skills/<name>` 相对链接（CLI 运行时实际加载的路径）；桌面端设置页的 skill 列表另读 `.workbuddy/skills/<name>`，两处都建才能既能用又能在 UI 里管理。用户级 skill 在 `~/.workbuddy/skills`，不属于项目范围。
 
 默认模式是“诊断并修复”，无需为已授权的普通目录迁移、去重或链接修复再次确认。用户明确“只检查/预览”时只读；只要求整理 skills 时不重写无关项目指引，只要求生成指引时不扩大为 skills 迁移。完整 doctor 调用覆盖两者。
 
@@ -92,8 +93,8 @@ WorkBuddy 指腾讯 WorkBuddy 桌面端及其内置的 CodeBuddy Code CLI，同�
 - 缺少规范位置时迁入，内容完全一致时去重，缺少入口或指向错误时修复。同名但内容不同的 skill 先比较完整目录；不能以 `.agents` 的优先级为由丢弃另一份独有内容。
 - 对无法判断意图的内容冲突或项目外链接，只暂停对应项并提出具体问题，其余可修复项继续。不因名称相同就合并不同用途的 skill，不执行被整理 skill 内部的安装、发布或其他动作。
 - 当前 Pi 优先使用原生 `.agents/skills` 发现；已有 `.pi/skills` 实体按相同规则迁移，必要兼容入口仅保留链接。不为了统一外观添加重复扫描路径或改动信任设置。
-- WorkBuddy 只认 `.codebuddy/skills`，项目确有 skill 时才建对应入口，没有 skill 不创建空目录。`.codebuddy` 下的 `settings*.json`、`rules/`、`agents/`、`commands/` 是该端自己的配置，除入口链接外不改动；在 WorkBuddy 或 CodeBuddy 自身会话里改 `.codebuddy/` 会被判定为自我修改并要求确认，被拦截时报告，不调整权限设置绕过。
-- 在项目 `AGENTS.md` 中增量写明持久约定：新增或修改项目 skill 只维护 `.agents/skills/<name>/`，Claude 与 WorkBuddy 入口使用相对链接；新增、重命名和删除 skill 时同步对应链接。不要将全部 skill 正文导入常驻项目指引。
+- WorkBuddy 只认 `.codebuddy/skills`（运行时）和 `.workbuddy/skills`（设置页列表），项目确有 skill 时两处都建，没有 skill 不创建空目录。这两个目录常被整体写进 `.gitignore`，会连入口链接一起忽略；按 skill 布局参考里的写法放行 `skills/` 并用 `git check-ignore -v` 验证。`.codebuddy` 下的 `settings*.json`、`rules/`、`agents/`、`commands/` 是该端自己的配置，除入口链接外不改动；在 WorkBuddy 或 CodeBuddy 自身会话里改 `.codebuddy/` 会被判定为自我修改并要求确认，被拦截时报告，不调整权限设置绕过。
+- 在项目 `AGENTS.md` 中增量写明持久约定：新增或修改项目 skill 只维护 `.agents/skills/<name>/`，Claude 与 WorkBuddy 的各个入口使用相对链接；新增、重命名和删除 skill 时同步全部对应链接。不要将全部 skill 正文导入常驻项目指引。
 
 ## 5. 检查并交付
 

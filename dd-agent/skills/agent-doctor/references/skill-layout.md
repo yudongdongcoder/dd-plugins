@@ -142,11 +142,23 @@ WorkBuddy 和 CodeBuddy Code 只发现 `<工作目录>/.codebuddy/skills` 与用
 
 `SKILL.md` 缺少 `name` 时该端按路径派生名称，非字符串的 `name`（例如 `name: 1024`）会被忽略并回落到路径名，这类值要加引号。`display_name` / `display-name`、`user-invocable`、`disable-model-invocation` 是该端的展示与调用控制字段，迁移和去重时保留。会话级的 `CODEBUDDY_SESSION_SKILL_DIRS` 由客户端自己管理，不写进项目，也不依赖它替代入口链接。
 
+WorkBuddy 桌面端另有一条 `<工作目录>/.workbuddy/skills` 路径，只供**设置页的 skill 列表**使用：桌面壳的 `getSkillList` 扫它，和 `batchToggleSkills`、`setSkillOverrides` 是同一组 UI 管理方法。真正执行的是外部 CLI 进程，由 `createSession` 通过 `opts.env` 拉起，它读的是 `.codebuddy/skills`。两条路径都存在，作用不同：
+
+| 路径 | 谁在读 | 不建的后果 |
+| --- | --- | --- |
+| `.codebuddy/skills/<name>` | CLI 运行时 | agent 加载不到该 skill |
+| `.workbuddy/skills/<name>` | 桌面端设置页 | 用户在 skill 列表里看不到、无法开关 |
+
+只建后者不建前者，会得到“设置页里看得见、agent 却用不上”的错觉状态——这是容易误判的一处，盘点时两条都要查。项目确有 skill 时两处都建相对链接；没有 skill 时都不建。
+
+项目把 `.workbuddy/` 或 `.codebuddy/` 整个写进 `.gitignore` 时（里面常有 memory 日志、tasks 等运行时产物），入口链接会一并被忽略，换机器 clone 下来就没有。需要改成忽略目录内容但放行 skills，例如 `.workbuddy/*` 加 `!.workbuddy/skills/`——注意直接忽略目录本身（`.workbuddy/`）会让 git 不再递归进去，此时 `!` 放行规则无效。改完用 `git check-ignore -v` 分别验证日志被忽略、链接未被忽略。
+
 ## 已核对的发现规则
 
 - Codex 扫描当前目录至仓库根目录间的 `.agents/skills`，支持 skill 文件夹链接；同名 skill 不自动合并。[Codex 官方说明](https://learn.chatgpt.com/docs/build-skills)
 - Claude 项目入口是 `.claude/skills/<name>/SKILL.md`，支持将 `<name>` 作为目录符号链接。[Claude 官方说明](https://code.claude.com/docs/en/skills#where-skills-live)
 - Pi 支持 `.pi/skills` 与当前及祖先目录中的 `.agents/skills`，向上查找到 git 仓库根为止（不在仓库内时到文件系统根）；项目 skills 需要项目已被信任，并受 `--no-skills` 影响。[Pi 官方说明](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/skills.md#locations)
 - WorkBuddy 与 CodeBuddy Code 扫描 `<工作目录>/.codebuddy/skills` 和用户级 `<配置目录>/skills`，递归深度 5，目录符号链接按解析后的类型跟随，因此逐 skill 链接可用；不扫描 `.agents/skills` 与 `.claude/skills`。依据 WorkBuddy 5.5.6 内置 agent-cli（`@tencent-ai/codebuddy-code` 2.137.1）的 skill provider 实现，读打包代码核对，没有可引用的公开文档。
+- WorkBuddy 桌面端设置页的 skill 列表另扫 `<工作目录>/.workbuddy/skills`（桌面壳 `getSkillList`），与 CLI 运行时的 `.codebuddy/skills` 是两条独立路径。依据 WorkBuddy 5.5.6 应用包 `app.asar` 内的 skill 管理实现，读打包代码核对，没有可引用的公开文档。
 
 核对日期：Codex、Claude Code、Pi 为 2026-09-09，WorkBuddy 为 2026-09-18；本机 Pi 0.85.1 文档也确认 `.agents/skills` 支持。不要把这些版本号固定成使用此 skill 的最低版本。
